@@ -32,6 +32,10 @@ app.get("/", (req, res) => {
 // set up routes
 app.use("/auth", authRoutes);
 
+app.get("/getUserID", authCheck, (req, res) => {
+    res.json(req.user);
+});
+
 // bind express with graphql
 app.use(
     "/graphql",

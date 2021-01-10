@@ -1,5 +1,6 @@
 const graphql = require("graphql");
 const User = require("../models/User");
+const action = require("../genres/action.json");
 
 const {
     GraphQLObjectType,
@@ -25,6 +26,27 @@ const UserType = new GraphQLObjectType({
     }),
 });
 
+const MovieType = new GraphQLObjectType({
+    name: "Movie",
+    fields: () => ({
+        movie_name: { type: GraphQLString },
+        imdb_url: { type: GraphQLString },
+        number: { type: GraphQLInt },
+        year: { type: GraphQLString },
+        Parental_guidance: { type: GraphQLString },
+        year: { type: GraphQLString },
+        length: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        imdb_ratings: { type: GraphQLInt },
+        metascore: { type: GraphQLInt },
+        director: { type: GraphQLString },
+        actor1: { type: GraphQLString },
+        actor2: { type: GraphQLString },
+        actor3: { type: GraphQLString },
+        actor4: { type: GraphQLString },
+    }),
+});
+
 const RootQuery = new GraphQLObjectType({
     name: "RootQueryType",
     fields: {
@@ -40,6 +62,13 @@ const RootQuery = new GraphQLObjectType({
             args: {},
             resolve(parent, args) {
                 return User.find({});
+            },
+        },
+        movies: {
+            type: new GraphQLList(MovieType),
+            args: {},
+            resolve(parent, args) {
+                return action;
             },
         },
     },
