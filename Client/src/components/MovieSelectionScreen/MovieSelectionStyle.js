@@ -1,0 +1,55 @@
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+export default makeStyles((theme) => ({
+    mainContainer: {
+        background: "radial-gradient(at center, #3498db, #9b59b6),#9b59b6",
+        justify: "center",
+        alignItems: "center",
+        textAlign: "center",
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+        height: "100%",
+        top: "0px",
+        left: "0px",
+        position: "fixed",
+        overflow: "hidden",
+    },
+    mainContent: {
+        justify: "center",
+        height: "100vh",
+    },
+    mainText: { marginTop: "2em", align: "center", color: "white" },
+
+    cardContainer: { width: "90vw", maxWidth: "260px", height: "400px" },
+    card: {
+        marginLeft: "6em",
+        position: "relative",
+        backgroundColor: "white",
+        width: "80vw",
+        maxWidth: "260px",
+        height: "300px",
+        // boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+        borderRadius: "5px",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+    },
+    swipe: { position: "absolute" },
+    buttons: { marginLeft: "2em", marginTop: "3em", width: "25em" },
+    polygonTop: {
+        position: "absolute",
+        width: "35vw",
+        height: "35vw",
+        //mixBlendMode: "multiply",
+        top: -100,
+        right: 0,
+    },
+    polygonBottom: {
+        position: "absolute",
+        width: "35vw",
+        height: "35vw",
+        // mixBlendMode: "multiply",
+        left: -50,
+        bottom: -50,
+    },
+}));

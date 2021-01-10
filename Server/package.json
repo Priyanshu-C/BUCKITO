@@ -1,0 +1,22 @@
+{
+    "name": "buckito",
+    "version": "1.0.0",
+    "description": "grapghql server for buckito",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cookie-session": "^1.4.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-graphql": "^0.12.0",
+        "graphql": "^15.4.0",
+        "mongoose": "^5.11.10",
+        "nodemon": "^2.0.7",
+        "passport": "^0.4.1",
+        "passport-google-oauth": "^2.0.0"
+    }
+}
