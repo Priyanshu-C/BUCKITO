@@ -2,8 +2,11 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
     mainContainer: {
-        minHeight: "1920px",
+        minHeight: "100%",
+        minWidth: "100%",
         background: "#e3e3e3",
+        top: "0px",
+        left: "0px",
     },
     mainHeaderTextContainer: {
         background: "black",
@@ -14,6 +17,6 @@ export default makeStyles((theme) => ({
     mainHeader: { marginTop: "1em", margin: "0 0 0 1em", color: "white" },
     mainMoviesContainer: {
         minHeight: "auto",
-        margin: "1em 2em",
+        margin: "1em 0 0 1em",
     },
 }));

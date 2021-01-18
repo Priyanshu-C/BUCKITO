@@ -10,6 +10,7 @@ const keys = require("./keys");
 const authRoutes = require("./routes/auth");
 const passportSetup = require("./config/passport-setup");
 const authCheck = require("./middleware/authcheck");
+
 // allow cross-origin requests
 app.use(cors());
 
@@ -20,6 +21,21 @@ app.use(
     })
 );
 
+// Used to get credentials passed
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    );
+    if ("OPTIONS" == req.method) {
+        res.send(200);
+    } else {
+        next();
+    }
+});
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,14 +48,16 @@ app.get("/", (req, res) => {
 // set up routes
 app.use("/auth", authRoutes);
 
-app.get("/getUserID", authCheck, (req, res) => {
-    res.json(req.user);
+//get UserId
+app.get("/getUserID", (req, res) => {
+    if (!req.user) res.send(null);
+    console.log("User fetching ID");
+    res.json(req.user.id);
 });
 
 // bind express with graphql
 app.use(
     "/graphql",
-    authCheck,
     graphqlHTTP({
         schema,
         graphiql: true,

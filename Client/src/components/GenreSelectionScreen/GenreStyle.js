@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
         width: "100%",
         background: "radial-gradient(at center, #3498db, #9b59b6),#9b59b6",
     },
-    mainText: { fontSize: "3.5em", color: "white", textAlign: "center" },
+    mainText: { fontSize: "3.3em", color: "white", textAlign: "center" },
     mainTextContainer: {},
     genreLogo: {
         width: "10vh",

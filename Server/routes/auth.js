@@ -8,11 +8,13 @@ const passport = require("passport");
 //   the user to google.com.  After authorization, Google will redirect the user
 //   back to this application at /auth/google/callback
 
+//
+
 // auth logout
 router.get("/logout", (req, res) => {
     console.log("logout");
     req.logout();
-    res.redirect("/");
+    res.redirect("http://localhost:3000/login");
 });
 
 router.get(
@@ -31,7 +33,7 @@ router.get(
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
     function (req, res) {
-        res.redirect("/");
+        res.redirect("http://localhost:3000");
     }
 );
 

@@ -1,11 +1,13 @@
 import { Card, CardContent, Grid, Paper, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import useStyles from "./MainScreenStyle";
 import Button from "@material-ui/core/Button";
 import Header from "./Header";
 import MovieCard from "./imageMediaCard";
 import Divider from "@material-ui/core/Divider";
+import { AuthContext } from "../App";
+import { Redirect } from "react-router-dom";
 
 const MainScreen = () => {
     const classes = useStyles();
@@ -16,15 +18,21 @@ const MainScreen = () => {
         );
         setdata(res.data.results);
     }, []);
-    console.log(data);
+
+    //AuthRedirection
+    const Auth = useContext(AuthContext);
+    console.log(Auth);
+    if (Auth == undefined) return <></>;
+    if (Auth === "") return <Redirect to="login" />;
+
     return (
-        <div>
-            <Header />
+        <>
             <Grid
                 container
                 className={classes.mainContainer}
                 direction="column"
             >
+                <Header />
                 <Grid
                     container
                     direction="row"
@@ -87,7 +95,11 @@ const MainScreen = () => {
                     >
                         {data
                             ? data.map((data) => (
-                                  <Grid item className="square xyz-in">
+                                  <Grid
+                                      key={data.title}
+                                      item
+                                      className="square xyz-in"
+                                  >
                                       <MovieCard data={data} />
                                   </Grid>
                               ))
@@ -95,7 +107,7 @@ const MainScreen = () => {
                     </Grid>
                 </Grid>
             </Grid>
-        </div>
+        </>
     );
 };
 

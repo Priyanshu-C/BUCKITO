@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import TinderCard from "react-tinder-card";
 import useStyles from "./MovieSelectionStyle";
 import Loading from "../Loading";
@@ -7,45 +7,32 @@ import polytop from "../../backgrounds/Polygontop.svg";
 import polybottom from "../../backgrounds/Polygontop.svg";
 
 import "./MovieSelection.css";
+import { useQuery } from "@apollo/client";
+import { GET_MOVIES } from "./gql";
 
 const db = [
     {
         name: "Richard asdasdasd",
         url: "../../backgrounds/Union.svg",
     },
-    {
-        name: "Richard asdasdasdssd",
-        url: { polybottom },
-    },
-    {
-        name: "Richard asdasd",
-        url: { polybottom },
-    },
-    {
-        name: "Richard Hendaasdasdsdasdricks",
-        url: "../../backgrounds/Union.svg",
-    },
-    {
-        name: "Richard asdaasdasdasdsd",
-        url: { polybottom },
-    },
-    {
-        name: "Richard sdasasasdd",
-        url: { polybottom },
-    },
-    {
-        name: "Richard asdasasasd",
-        url: "../../backgrounds/Union.svg",
-    },
 ];
 
 const alreadyRemoved = [];
-let charactersState = db; // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
+let charactersState = db;
 
 function MovieSelection() {
     const classes = useStyles();
     const [characters, setCharacters] = useState(db);
     const [lastDirection, setLastDirection] = useState();
+    const genres = JSON.parse(localStorage.getItem("gerneSelected"));
+    console.log(genres);
+    const { loading, error, data } = useQuery(GET_MOVIES, {
+        variables: { genres: genres },
+    });
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     const childRefs = useMemo(
         () =>
@@ -80,10 +67,20 @@ function MovieSelection() {
             childRefs[index].current.swipe(dir); // Swipe the card!
         }
     };
-
+    if (loading) {
+        return (
+            <>
+                <Loading />
+                <Grid
+                    container
+                    direction="column"
+                    className={classes.mainContainer}
+                ></Grid>
+            </>
+        );
+    }
     return (
         <>
-            <Loading />
             <Grid
                 container
                 direction="column"

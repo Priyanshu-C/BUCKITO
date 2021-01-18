@@ -9,7 +9,7 @@ export default createMuiTheme({
         h1: {
             fontFamily: "Abel",
             fontWeight: 300,
-            fontSize: "4rem",
+            fontSize: "3.5rem",
             color: "black",
             lineHeight: 1.3,
         },

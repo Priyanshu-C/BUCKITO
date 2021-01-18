@@ -1,29 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import theme from "./ui/Theme";
 
 //Component import
-import GenreSelection from "./GenreScreen/GenreSelection";
+import GenreSelection from "./GenreSelectionScreen/GenreSelection";
 import MainScreen from "./MainScreen/MainScreen";
 import MovieSelection from "./MovieSelectionScreen/MovieSelection";
+import Login from "./Login/Login";
+import axios from "./axios";
+
+export const AuthContext = createContext(undefined);
 
 const App = () => {
+    const [Auth, setAuth] = useState(undefined);
+
+    useEffect(() => {
+        if (!localStorage.getItem("UserData")) {
+            axios.get("getUserID").then((res) => {
+                setAuth(res.data);
+                localStorage.setItem("UserData", res.data);
+                console.log(res.data);
+            });
+        } else {
+            setAuth(localStorage.getItem("UserData"));
+        }
+    }, []);
+
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route exact path="/" component={GenreSelection} />
-                        <Route
-                            exact
-                            path="/selectmovie"
-                            component={MovieSelection}
-                        />
-                        <Route exact path="/main" component={MainScreen} />
-                    </Switch>
-                </BrowserRouter>
-            </ThemeProvider>
+            <AuthContext.Provider value={Auth}>
+                <ThemeProvider theme={theme}>
+                    <BrowserRouter>
+                        <Switch>
+                            <Route exact path="/" component={GenreSelection} />
+                            <Route
+                                exact
+                                path="/selectmovie"
+                                component={MovieSelection}
+                            />
+                            <Route exact path="/main" component={MainScreen} />
+                            <Route exact path="/login" component={Login} />
+                        </Switch>
+                    </BrowserRouter>
+                </ThemeProvider>
+            </AuthContext.Provider>
         </>
     );
 };

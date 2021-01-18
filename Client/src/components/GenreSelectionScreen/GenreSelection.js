@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import _ from "lodash";
 
 import Grid from "@material-ui/core/Grid";
@@ -9,8 +9,15 @@ import { Link } from "react-router-dom";
 import GenreIcon from "./GenreIcon";
 import polytop from "../../backgrounds/Polygontop.svg";
 import polybottom from "../../backgrounds/Polygontop.svg";
-import Hidden from "@material-ui/core/Hidden";
-import Loading from "../Loading";
+
+import {
+    BrowserRouter,
+    Route,
+    Switch,
+    Redirect,
+    useHistory,
+} from "react-router-dom";
+import { AuthContext } from "../App";
 
 //Importing Icons
 import hamlet from "../../icons/hamlet.svg";
@@ -23,23 +30,43 @@ import shakespeare from "../../icons/shakespeare.svg";
 import roses from "../../icons/roses.svg";
 
 import useStyles from "./GenreStyle";
+import { SUBMIT_GENRES } from "./gql";
+import { useMutation } from "@apollo/client";
 
 const GenreSelection = () => {
     const [choosenGenre, setchoosenGenre] = useState([]);
     const classes = useStyles();
+    const [submitMutation, { submitdata }] = useMutation(SUBMIT_GENRES);
+    let history = useHistory();
+
+    useEffect(() => {
+        console.log(choosenGenre);
+    }, [choosenGenre]);
 
     const HandleClick = (event) => {
         const choosen = event.target.alt;
         if (choosen) {
             if (!choosenGenre.includes(choosen) & (choosenGenre.length < 3)) {
                 setchoosenGenre((choosenGenre) => [...choosenGenre, choosen]);
-            } else {
+            } else if (choosenGenre.includes(choosen)) {
                 setchoosenGenre(
-                    choosenGenre.filter((gerne) => gerne != choosen)
+                    choosenGenre.filter((genre) => genre != choosen)
                 );
             }
         }
     };
+
+    const HandleSubmit = () => {
+        console.log(choosenGenre);
+        localStorage.setItem("gerneSelected", JSON.stringify(choosenGenre));
+        submitMutation({ variables: { id: Auth, genre: choosenGenre } });
+        history.push("/selectmovie");
+    };
+
+    //AuthRedirection
+    const Auth = useContext(AuthContext);
+    if (Auth == undefined) return <></>;
+    if (Auth == "") return <Redirect to="login" />;
 
     return (
         <div>
@@ -111,7 +138,7 @@ const GenreSelection = () => {
                         <GenreIcon
                             choosenGenre={choosenGenre}
                             HandleClick={HandleClick}
-                            title={"Sci-fi"}
+                            title={"Scifi"}
                             icon={glasses}
                             classes={classes}
                         />
@@ -186,13 +213,13 @@ const GenreSelection = () => {
                         className="xyz-in"
                         xyz="duration-20 fade small-3"
                     >
-                        <Link to="/selectmovie">
+                        <div onClick={HandleSubmit}>
                             <IconButton aria-label="submit" color="primary">
                                 <KeyboardArrowRightIcon
                                     className={classes.submitButton}
                                 />
                             </IconButton>
-                        </Link>
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>

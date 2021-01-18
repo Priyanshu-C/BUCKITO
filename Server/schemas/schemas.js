@@ -1,6 +1,10 @@
 const graphql = require("graphql");
 const User = require("../models/User");
-const action = require("../genres/action.json");
+const genreArray = {
+    Action: require("../genres/action.json"),
+    Scifi: require("../genres/sifi.json"),
+    Thriller: require("../genres/sifi.json"),
+};
 
 const {
     GraphQLObjectType,
@@ -30,6 +34,7 @@ const MovieType = new GraphQLObjectType({
     name: "Movie",
     fields: () => ({
         movie_name: { type: GraphQLString },
+        movie_id: { type: GraphQLInt },
         imdb_url: { type: GraphQLString },
         number: { type: GraphQLInt },
         year: { type: GraphQLString },
@@ -52,9 +57,10 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         user: {
             type: UserType,
-            args: { name: { type: GraphQLString } },
+            args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                return User.find({ name: args.name });
+                console.log(args.id);
+                return User.findById(args.id);
             },
         },
         users: {
@@ -64,11 +70,16 @@ const RootQuery = new GraphQLObjectType({
                 return User.find({});
             },
         },
-        movies: {
+        getMovieList: {
             type: new GraphQLList(MovieType),
-            args: {},
+            args: { genres: { type: new GraphQLList(GraphQLString) } },
             resolve(parent, args) {
-                return action;
+                console.log(args.genres);
+                let movieArray = [];
+                args.genres.map((genre) =>
+                    movieArray.push(...genreArray[genre])
+                );
+                return [...movieArray];
             },
         },
     },
@@ -109,12 +120,12 @@ const Mutation = new GraphQLObjectType({
         addGenre: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
+                id: { type: GraphQLString },
                 genre: { type: new GraphQLList(GraphQLString) },
             },
             resolve(parent, args) {
                 return User.updateOne(
-                    { name: args.name },
+                    { _id: args.id },
                     {
                         $addToSet: { genre: args.genre },
                     }
