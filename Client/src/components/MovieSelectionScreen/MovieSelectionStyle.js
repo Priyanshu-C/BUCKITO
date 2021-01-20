@@ -20,6 +20,13 @@ export default makeStyles((theme) => ({
         height: "100vh",
     },
     mainText: { marginTop: "2em", align: "center", color: "white" },
+    cardMovieTitle: {
+        marginTop: "2em",
+        top: "5em",
+        float: "bottom",
+        fontSize: "1.5em",
+        color: "white",
+    },
 
     cardContainer: { width: "90vw", maxWidth: "260px", height: "400px" },
     card: {

@@ -7,14 +7,16 @@ export default makeStyles((theme) => ({
         background: "#e3e3e3",
         top: "0px",
         left: "0px",
+        position: "relative",
     },
     mainHeaderTextContainer: {
-        background: "black",
+        backgroundColor: "#0093E9",
+        background: "linear-gradient(160deg, #0093E9 0%, #80D0C7 100%)",
     },
     textAndOther: {
-        marginLeft: "3em",
+        margin: "3rem ",
     },
-    mainHeader: { marginTop: "1em", margin: "0 0 0 1em", color: "white" },
+    mainHeader: { marginTop: "1em", margin: "0 0 0 3rem", color: "white" },
     mainMoviesContainer: {
         minHeight: "auto",
         margin: "1em 0 0 1em",

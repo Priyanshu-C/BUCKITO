@@ -8,6 +8,7 @@ import MovieCard from "./imageMediaCard";
 import Divider from "@material-ui/core/Divider";
 import { AuthContext } from "../App";
 import { Redirect } from "react-router-dom";
+import "./MainScreen.sass";
 
 const MainScreen = () => {
     const classes = useStyles();
@@ -32,7 +33,6 @@ const MainScreen = () => {
                 className={classes.mainContainer}
                 direction="column"
             >
-                <Header />
                 <Grid
                     container
                     direction="row"
@@ -46,24 +46,11 @@ const MainScreen = () => {
                     </Grid>
                     <Grid item xs={12}>
                         <Typography
-                            style={{ margin: "0 0 0 1.5em", color: "white" }}
+                            style={{ margin: "0 0 2rem 3rem", color: "white" }}
                             variant="h5"
                         >
                             Subheading
                         </Typography>
-                    </Grid>
-
-                    <Grid
-                        container
-                        style={{ margin: "2em 0 2em 3em" }}
-                        direction="row"
-                    >
-                        <Button variant="outlined" color="primary">
-                            Primary
-                        </Button>
-                        <Button variant="outlined" color="secondary">
-                            True
-                        </Button>
                     </Grid>
                 </Grid>
                 <Divider />

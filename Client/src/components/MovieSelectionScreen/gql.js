@@ -6,6 +6,7 @@ const GET_MOVIES = gql`
             movie_name
             movie_id
             year
+            poster
         }
     }
 `;

@@ -10,13 +10,12 @@ export default makeStyles((theme) => ({
         background: "radial-gradient(at center, #3498db, #9b59b6),#9b59b6",
     },
     mainText: { fontSize: "3.3em", color: "white", textAlign: "center" },
-    mainTextContainer: {},
     genreLogo: {
         width: "10vh",
         height: "10vh",
     },
     logoContainer: {
-        margin: "3em 2em",
+        padding: "3em 0",
         textAlign: "center",
     },
     background: {
@@ -32,6 +31,7 @@ export default makeStyles((theme) => ({
         width: "35vw",
         height: "35vw",
         //mixBlendMode: "multiply",
+        zIndex: "-1",
         top: -100,
         right: 0,
     },

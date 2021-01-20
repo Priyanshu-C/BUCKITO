@@ -88,7 +88,7 @@ const GenreSelection = () => {
                     className={classes.polygonBottom}
                     src={polybottom}
                 />
-                <Grid item className={classes.mainTextContainer}>
+                <Grid item>
                     <Typography
                         variant="h1"
                         sm={12}
@@ -212,6 +212,7 @@ const GenreSelection = () => {
                         item
                         className="xyz-in"
                         xyz="duration-20 fade small-3"
+                        sm={12}
                     >
                         <div onClick={HandleSubmit}>
                             <IconButton aria-label="submit" color="primary">

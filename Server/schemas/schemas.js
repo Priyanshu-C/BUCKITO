@@ -3,7 +3,11 @@ const User = require("../models/User");
 const genreArray = {
     Action: require("../genres/action.json"),
     Scifi: require("../genres/sifi.json"),
-    Thriller: require("../genres/sifi.json"),
+    Thriller: require("../genres/thriller.json"),
+    Drama: require("../genres/drama.json"),
+    Horror: require("../genres/horror.json"),
+    Adventure: require("../genres/adventure.json"),
+    Romance: require("../genres/romance.json"),
 };
 
 const {
@@ -36,6 +40,7 @@ const MovieType = new GraphQLObjectType({
         movie_name: { type: GraphQLString },
         movie_id: { type: GraphQLInt },
         imdb_url: { type: GraphQLString },
+        poster: { type: GraphQLString },
         number: { type: GraphQLInt },
         year: { type: GraphQLString },
         Parental_guidance: { type: GraphQLString },
@@ -79,6 +84,11 @@ const RootQuery = new GraphQLObjectType({
                 args.genres.map((genre) =>
                     movieArray.push(...genreArray[genre])
                 );
+                function shuffle(array) {
+                    array.sort(() => Math.random() - 0.5);
+                }
+                shuffle(movieArray);
+                movieArray = movieArray.splice(0, 10);
                 return [...movieArray];
             },
         },
