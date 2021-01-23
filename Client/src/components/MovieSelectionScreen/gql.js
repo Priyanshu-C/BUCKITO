@@ -11,4 +11,12 @@ const GET_MOVIES = gql`
     }
 `;
 
-export { GET_MOVIES };
+const SEND_SELECTED_MOVIES = gql`
+    mutation addMovie($id: String, $movies: [String]) {
+        addMovie(id: $id, movies: $movies) {
+            name
+        }
+    }
+`;
+
+export { GET_MOVIES, SEND_SELECTED_MOVIES };

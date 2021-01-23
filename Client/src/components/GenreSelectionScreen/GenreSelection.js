@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import GenreIcon from "./GenreIcon";
 import polytop from "../../backgrounds/Polygontop.svg";
 import polybottom from "../../backgrounds/Polygontop.svg";
-
+import anime from "animejs";
 import {
     BrowserRouter,
     Route,
@@ -34,6 +34,39 @@ import { SUBMIT_GENRES } from "./gql";
 import { useMutation } from "@apollo/client";
 
 const GenreSelection = () => {
+    useEffect(() => {
+        let animated = anime
+            .timeline()
+            .add({
+                targets: ".polyTop",
+                autoplay: true,
+                rotate: "720deg",
+                loop: true,
+                duration: 1500000,
+            })
+            .add(
+                {
+                    targets: ".polyBottom",
+                    autoplay: true,
+                    rotate: "-720deg",
+                    loop: true,
+                    duration: 1500000,
+                },
+                0
+            );
+    });
+
+    const genres = [
+        { title: "Action", icon: hamlet },
+        { title: "Thriller", icon: puppet },
+        { title: "Scifi", icon: glasses },
+        { title: "Drama", icon: theater },
+        { title: "Horror", icon: ventriloquist },
+        { title: "Adventure", icon: award },
+        { title: "Comedy", icon: shakespeare },
+        { title: "Romance", icon: roses },
+    ];
+
     const [choosenGenre, setchoosenGenre] = useState([]);
     const classes = useStyles();
     const [submitMutation, { submitdata }] = useMutation(SUBMIT_GENRES);
@@ -80,13 +113,13 @@ const GenreSelection = () => {
             >
                 <img
                     alt="Polytop"
-                    className={classes.polygonTop}
+                    className={`${classes.polygonTop} polyTop`}
                     src={polytop}
                 />
                 <img
                     alt="PolyBottom"
-                    className={classes.polygonBottom}
-                    src={polybottom}
+                    className={`${classes.polygonBottom} polyBottom`}
+                    src={polytop}
                 />
                 <Grid item>
                     <Typography
@@ -104,110 +137,23 @@ const GenreSelection = () => {
                     alignItems="flex-start"
                     className={classes.logoContainer}
                 >
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Action"}
-                            icon={hamlet}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Thriller"}
-                            icon={puppet}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Scifi"}
-                            icon={glasses}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Drama"}
-                            icon={theater}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Horror"}
-                            icon={ventriloquist}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Adventure"}
-                            icon={award}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Comedy"}
-                            icon={shakespeare}
-                            classes={classes}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        className="xyz-in"
-                        xyz="duration-20 fade small-3"
-                    >
-                        <GenreIcon
-                            choosenGenre={choosenGenre}
-                            HandleClick={HandleClick}
-                            title={"Romance"}
-                            icon={roses}
-                            classes={classes}
-                        />
-                    </Grid>
+                    {genres &&
+                        genres.map((genre) => (
+                            <Grid
+                                item
+                                className="xyz-in"
+                                xyz="duration-20 fade small-3"
+                            >
+                                <GenreIcon
+                                    choosenGenre={choosenGenre}
+                                    HandleClick={HandleClick}
+                                    title={genre.title}
+                                    icon={genre.icon}
+                                    classes={classes}
+                                />
+                            </Grid>
+                        ))}
+
                     <Grid
                         item
                         className="xyz-in"

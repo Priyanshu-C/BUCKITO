@@ -2,10 +2,8 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
     mainContainer: {
-        minHeight: "100%",
-        minWidth: "100%",
         background: "#e3e3e3",
-        top: "0px",
+        top: "2rem",
         left: "0px",
         position: "relative",
     },

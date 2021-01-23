@@ -115,14 +115,14 @@ const Mutation = new GraphQLObjectType({
         addMovie: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
-                movie: { type: GraphQLString },
+                id: { type: GraphQLString },
+                movies: { type: new GraphQLList(GraphQLString) },
             },
             resolve(parent, args) {
                 return User.updateOne(
-                    { name: args.name },
+                    { _id: args.id },
                     {
-                        $addToSet: { alreadyWatchedMovies: args.movie },
+                        $addToSet: { alreadyWatchedMovies: args.movies },
                     }
                 );
             },
