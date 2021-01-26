@@ -11,6 +11,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_MOVIES, SEND_SELECTED_MOVIES } from "./gql";
 import { AuthContext } from "../App";
+import axios from "../axios";
 
 const db = [];
 const alreadyRemoved = [];
@@ -77,6 +78,7 @@ function MovieSelection() {
                 ...selectedMovies,
                 `${name}#${id}`,
             ]);
+            axios.get(`/addMovieToRecommend?movie=${name}&id=${Auth}`);
         }
         alreadyRemoved.push(name);
     };

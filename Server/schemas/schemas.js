@@ -1,4 +1,5 @@
 const graphql = require("graphql");
+const chalk = require("chalk");
 const User = require("../models/User");
 const genreArray = {
     Action: require("../genres/action.json"),
@@ -92,26 +93,19 @@ const RootQuery = new GraphQLObjectType({
                 return [...movieArray];
             },
         },
+        getRecommendation: {
+            type: UserType,
+            args: { id: { type: GraphQLString } },
+            resolve(parent, args) {
+                return User.findById(args.id);
+            },
+        },
     },
 });
 
 const Mutation = new GraphQLObjectType({
     name: "Mutation",
     fields: {
-        addUser: {
-            type: UserType,
-            args: {
-                name: { type: GraphQLString },
-                dateOfBirth: { type: GraphQLString },
-            },
-            resolve(parent, args) {
-                let user = new User({
-                    name: args.name,
-                    dateOfBirth: args.dateOfBirth,
-                });
-                return user.save();
-            },
-        },
         addMovie: {
             type: UserType,
             args: {

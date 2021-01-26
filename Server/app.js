@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schemas/schemas");
 const cors = require("cors");
@@ -10,7 +11,10 @@ const keys = require("./keys");
 const authRoutes = require("./routes/auth");
 const passportSetup = require("./config/passport-setup");
 const authCheck = require("./middleware/authcheck");
-
+const User = require("./models/User");
+const getRecommendation = axios.create({
+    baseURL: "http://127.0.0.1:8000/",
+});
 // allow cross-origin requests
 app.use(cors());
 
@@ -53,6 +57,29 @@ app.get("/getUserID", (req, res) => {
     if (!req.user) res.send(null);
     console.log("User fetching ID");
     res.json(req.user.id);
+});
+
+app.get("/addMovieToRecommend", async (req, res) => {
+    console.log(req.query.movie);
+    const id = req.query.id;
+    const movieName = req.query.movie;
+    var recommendResponse = await axios.post(
+        `http://127.0.0.1:8000/movie?movie=${movieName}`
+    );
+    recommendResponse = recommendResponse.data.data;
+    var movies = [];
+    var movie = "";
+    for (var i = 0; i < recommendResponse.length; i = i + 2) {
+        movie = recommendResponse[i + 1] + "#" + recommendResponse[i];
+        movies.push(movie);
+    }
+    await User.updateOne(
+        { _id: id },
+        {
+            $addToSet: { recommendedMovies: movies },
+        }
+    );
+    res.send("Done!");
 });
 
 // bind express with graphql

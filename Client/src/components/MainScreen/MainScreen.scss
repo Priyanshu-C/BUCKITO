@@ -45,6 +45,7 @@ $transition: all 0.5s ease;
     overflow: hidden;
     z-index: 6;
     top: 0px;
+    border-bottom: 0.1rem solid black;
 
     &__left {
         &__logo {
@@ -59,7 +60,7 @@ $transition: all 0.5s ease;
     }
 
     &__logo {
-        margin-left: 20rem;
+        margin-left: 20%;
         &__logo {
             font-family: "Abel";
             font-size: 2rem;

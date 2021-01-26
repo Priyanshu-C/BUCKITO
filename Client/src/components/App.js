@@ -9,6 +9,8 @@ import MainScreen from "./MainScreen/MainScreen";
 import MovieSelection from "./MovieSelectionScreen/MovieSelection";
 import Login from "./Login/Login";
 import axios from "./axios";
+import Modal from "./Modal";
+import Window from "./Window";
 
 export const AuthContext = createContext(undefined);
 
@@ -41,6 +43,7 @@ const App = () => {
                             />
                             <Route exact path="/main" component={MainScreen} />
                             <Route exact path="/login" component={Login} />
+                            <Route exact path="/modal" component={Window} />
                         </Switch>
                     </BrowserRouter>
                 </ThemeProvider>
