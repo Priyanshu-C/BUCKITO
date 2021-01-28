@@ -1,52 +1,37 @@
 * {
     box-sizing: border-box;
 }
-
-.search {
-    display: flex;
-    width: 20rem;
-    transform: scale(0.8);
-    justify-content: flex-end;
-    margin-right: 1rem;
-    margin-bottom: 2rem;
+html {
+    background-color: rgb(22, 54, 102);
 }
+.search-container {
+    &__inputbox {
+        margin-top: 1.5rem;
+        display: inline-block;
+        width: 13rem;
+        position: relative;
+        height: 3rem;
+    }
+    &__inputbox input[type="text"] {
+        border: none;
+        background-color: transparent;
 
-/* Style the search field */
-.input-box {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    width: 20%;
-    background: #000000;
-    opacity: 1;
-    position: absolute;
-    z-index: 8;
-    border-radius: 50px;
-    outline: none;
-}
+        width: 13rem;
+        outline: none;
+        font-size: 1.5rem;
+        color: white;
+        transition: 0.5s ease;
+    }
+    &__inputbox input[type="text"]:focus {
+        border-bottom: 2px solid rgb(0, 0, 0);
+    }
 
-/* Style the submit button */
-form.example button {
-    width: 20%;
-    padding: 10px;
-    background: #2196f3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
-    cursor: pointer;
-    z-index: 9;
-    position: absolute;
-    border-radius: 50px;
-    outline: none;
-}
-
-form.example button:hover {
-    background: #0b7dda;
-}
-
-.search-icon {
-    transform: scale(1.3);
-    padding: 0px;
-    z-index: 8;
+    &__submit {
+        background-color: transparent;
+        color: white;
+        border: none;
+        font-size: 1.5rem;
+        transform: translateX(-1.8rem);
+        outline: none;
+    }
 }

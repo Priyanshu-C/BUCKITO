@@ -9,6 +9,7 @@ const genreArray = {
     Horror: require("../genres/horror.json"),
     Adventure: require("../genres/adventure.json"),
     Romance: require("../genres/romance.json"),
+    Comedy: require("../genres/comedy.json"),
 };
 
 const {
@@ -78,9 +79,13 @@ const RootQuery = new GraphQLObjectType({
         },
         getMovieList: {
             type: new GraphQLList(MovieType),
-            args: { genres: { type: new GraphQLList(GraphQLString) } },
+            args: {
+                count: { type: GraphQLInt },
+                genres: { type: new GraphQLList(GraphQLString) },
+            },
             resolve(parent, args) {
                 console.log(args.genres);
+                console.log(args.count);
                 let movieArray = [];
                 args.genres.map((genre) =>
                     movieArray.push(...genreArray[genre])
@@ -89,7 +94,7 @@ const RootQuery = new GraphQLObjectType({
                     array.sort(() => Math.random() - 0.5);
                 }
                 shuffle(movieArray);
-                movieArray = movieArray.splice(0, 10);
+                movieArray = movieArray.splice(0, args.count);
                 return [...movieArray];
             },
         },

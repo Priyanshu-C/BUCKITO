@@ -1,30 +1,31 @@
-import {
-    Card,
-    CardActionArea,
-    CardContent,
-    Grid,
-    Paper,
-    Typography,
-} from "@material-ui/core";
+//Important Dependencies
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import useStyles from "./MainScreenStyle";
-import Button from "@material-ui/core/Button";
-import Header from "./Header";
-import MovieCard from "./MovieCard";
-import Divider from "@material-ui/core/Divider";
-import { AuthContext } from "../App";
 import { Redirect } from "react-router-dom";
-import "./MainScreen.scss";
 import anime from "animejs";
+
+//Icons
+import { AiFillHeart, AiFillStar } from "react-icons/ai";
+import { GrAscend } from "react-icons/gr";
+import { DiCodeigniter } from "react-icons/di";
+import { HiChartBar } from "react-icons/hi";
+import { TiArrowRightThick } from "react-icons/ti";
+
+// Styling
+import "./MainScreen.scss";
 import vector from "./vectors/vector";
+import movieSvgBack from "./vectors/movieSvgBack.svg";
+
+//Components
+import MovieCard from "./components/MovieCard";
+import Modal from "./components/Modal";
 import SearchButton from "./components/SearchButton";
-import avatar from "../../icons/nav/avatar.svg";
-import search from "../../icons/nav/magnifying-glass.svg";
-import bucket from "../../icons/nav/shopping-bag.svg";
+
+//Auth Context
+import { AuthContext } from "../App";
+
+//GQL Apollo
+import { GET_RECOMMENDATIONS, GET_MOVIES } from "./gql";
 import { useQuery } from "@apollo/client";
-import { GET_RECOMMENDATIONS } from "./gql";
-import Modal from "../Modal";
 
 const MainScreen = () => {
     const [showModal, setShowModal] = useState(false);
@@ -36,24 +37,47 @@ const MainScreen = () => {
     const Auth = useContext(AuthContext);
     const [recommendedData, setRecommendedData] = useState([]);
 
+    //Use Query for GraphQL
     const { loading, data, err } = useQuery(GET_RECOMMENDATIONS, {
         variables: { id: Auth },
     });
+
+    const [genre, setGenre] = useState(null);
+    const genreQuery = useQuery(GET_MOVIES, {
+        variables: { genres: [genre], count: 20 },
+    });
+
     function shuffle(array) {
         array.sort(() => Math.random() - 0.5);
     }
     useEffect(() => {
         if (data) {
-            if (data) {
+            if (data && !genre) {
                 const recommendation = data.getRecommendation.recommendedMovies;
                 const res = recommendation.map((movie) => {
                     return movie.split("#");
                 });
                 shuffle(res);
                 setRecommendedData(res);
+            } else {
+                let array = [];
+                if (genreQuery.data) {
+                    const res = genreQuery.data.getMovieList;
+                    array = res.map((id) => ["Ok", String(id.movie_id)]);
+                    console.log(array);
+                    setRecommendedData(array);
+                }
             }
         }
-    }, [data]);
+    }, [data, genreQuery]);
+
+    const handleGenre = (e) => {
+        console.log(e.target.outerText);
+        setGenre(String(e.target.outerText));
+    };
+    useEffect(() => {
+        console.log(recommendedData);
+    }, [recommendedData]);
 
     let animatedOn;
     let animatedOff;
@@ -73,8 +97,6 @@ const MainScreen = () => {
         });
     });
 
-    const classes = useStyles();
-
     const handleRender = () => {
         animatedOn.finished.then(() => animatedOn.reverse());
         animatedOn.play();
@@ -83,7 +105,6 @@ const MainScreen = () => {
     // console.log(Auth);
     if (Auth == undefined) return <></>;
     if (Auth === "") return <Redirect to="login" />;
-
     return (
         <>
             <Modal
@@ -97,115 +118,128 @@ const MainScreen = () => {
                     position: "relative",
                 }}
             >
-                <div>
-                    <svg
-                        id="morph"
-                        height="100%"
-                        width="100%"
-                        viewBox="0 0 1920 1080"
-                        preserveAspectRatio="none"
-                    >
-                        <path className="morph" d={vector[0]} />
-                    </svg>
-                </div>
-                <div className="nav-bar">
-                    <div className="nav-bar__left">
-                        <img
-                            className="nav-bar__left__logo"
-                            src={avatar}
-                            alt="avatar"
-                        />
+                <div className="main-page-container">
+                    <img
+                        src={movieSvgBack}
+                        className="background-movie-svg"
+                        alt="background"
+                    />
+                    <div className="sidebar-and-header">
+                        <div className="sidebar-and-header__header">
+                            BUCKITO
+                        </div>
+                        <div className="sidebar-and-header__sidebar">
+                            <div className="sidebar-and-header__sidebar-header">
+                                Films
+                            </div>
+                            <div className="sidebar-and-header__sidebar-menu">
+                                <ul>
+                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                        <DiCodeigniter className="icons" />
+                                        Now Playing
+                                    </li>
+                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                        <AiFillStar className="icons" />
+                                        Popular
+                                    </li>
+                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                        <TiArrowRightThick className="icons" />
+                                        Upcoming
+                                    </li>
+
+                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                        <AiFillHeart className="icons" />
+                                        Made for you
+                                    </li>
+                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                        <HiChartBar className="icons" />
+                                        Trending Now
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div className="nav-bar__logo">
-                        <h1 className="nav-bar__logo__logo">BUCKITO</h1>
-                    </div>
-                    <div className="nav-bar__right">
-                        <SearchButton />
-                        <img
-                            onClick={handleRender}
-                            className="nav-bar__right__bucket-logo"
-                            src={bucket}
-                            alt="avatar"
-                        />
-                    </div>
-                </div>
-                <Grid
-                    container
-                    className={classes.mainContainer}
-                    direction="column"
-                >
-                    <Grid
-                        container
-                        direction="row"
-                        className={classes.mainHeaderTextContainer}
-                    >
-                        <Grid item xs={12}>
-                            <Typography
-                                variant="h1"
-                                className={classes.mainHeader}
-                            >
-                                Welcome' <br />
-                                Enjoy the best Movie Recommendation Ever
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography
-                                style={{
-                                    fontFamily: "Architects Daughter",
-                                    margin: "0 0 2rem 3rem",
-                                    color: "white",
-                                }}
-                                variant="h5"
-                            >
-                                Yes, we did it!
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid
-                        container
-                        direction="row"
-                        justify="flex-start"
-                        alignItems="flex-start"
-                        className={classes.mainMoviesContainer}
-                    >
-                        <Grid item xs={12}>
-                            <Typography
-                                variant="h5"
-                                style={{
-                                    margin: "2rem 0 1rem 3rem",
-                                }}
-                            >
-                                Top 20 Recommended movies
-                            </Typography>
-                        </Grid>
-                        <Grid
-                            container
-                            className="square-grid"
-                            xyz="fade small stagger"
-                            spacing={4}
-                            justify="center"
-                            alignItems="flex-start"
-                        >
-                            {recommendedData
-                                ? recommendedData.map((movie) =>
-                                      movie ? (
-                                          <Grid item className="square xyz-in">
-                                              {/* disableRipple if needed */}
+                    <div className="main-body">
+                        <div className="main-body__nav-bar">
+                            <div className="main-body__nav-bar-search"></div>
+                            <div className="main-body__nav-bar-right-header">
+                                <SearchButton />
+                                <div className="main-body__nav-bar-right-header-link">
+                                    Bucket List
+                                </div>
+                                <div className="main-body__nav-bar-right-header-link">
+                                    Sign Out
+                                </div>
+                            </div>
+                        </div>
+                        <div className="main-body__genre">
+                            <div class="main-body__genre__header">Genres</div>
+                            <div className="main-body__genre__genres">
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Action
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Scifi
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Drama
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Comedy
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Romance
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Thriller
+                                </button>
+                                <button
+                                    onClick={handleGenre}
+                                    class="main-body__genre__genres-genre"
+                                >
+                                    Horror
+                                </button>
+                            </div>
+                        </div>
+                        <div className="main-body__movies-container">
+                            <div className="main-body__movies-container__movie-card">
+                                {recommendedData
+                                    ? recommendedData.map((movie) =>
+                                          movie ? (
                                               <MovieCard
                                                   setModalData={setModalData}
                                                   openModal={openModal}
                                                   id={movie[1]}
+                                                  key={movie[1]}
                                               />
-                                          </Grid>
-                                      ) : (
-                                          ""
+                                          ) : (
+                                              ""
+                                          )
                                       )
-                                  )
-                                : " "}
-                        </Grid>
-                    </Grid>
-                </Grid>
+                                    : " "}
+                            </div>
+                        </div>
+                        <div className="main-body__footer"></div>
+                    </div>
+                </div>
             </div>
         </>
     );

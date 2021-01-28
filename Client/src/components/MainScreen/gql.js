@@ -6,5 +6,13 @@ const GET_RECOMMENDATIONS = gql`
         }
     }
 `;
+const GET_MOVIES = gql`
+    query getMovieList($genres: [String], $count: Int) {
+        getMovieList(genres: $genres, count: $count) {
+            movie_name
+            movie_id
+        }
+    }
+`;
 
-export { GET_RECOMMENDATIONS };
+export { GET_RECOMMENDATIONS, GET_MOVIES };

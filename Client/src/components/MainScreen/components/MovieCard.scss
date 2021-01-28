@@ -11,12 +11,13 @@
 
 .card-container {
     display: flex;
-    width: 13rem;
-    height: 25rem;
+    width: 12.5rem;
+    height: 24rem;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     overflow: hidden;
+    margin-bottom: 1rem;
     border-radius: 0.25rem;
     &__image {
         flex: 0 0 100%;
@@ -37,7 +38,7 @@
         flex: 0 0 100%;
         display: flex;
         &__genre {
-            color: rgb(99, 99, 99);
+            color: rgb(255, 255, 255);
         }
         &__rating {
             margin-left: auto;
@@ -45,7 +46,7 @@
         }
     }
     &__title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
     &__rating-icon {
         fill: gold;

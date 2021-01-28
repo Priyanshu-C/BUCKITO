@@ -52,12 +52,12 @@ function MovieSelection() {
     const genres = JSON.parse(localStorage.getItem("gerneSelected"));
     //console.log(genres);
     const { loading, error, data } = useQuery(GET_MOVIES, {
-        variables: { genres: genres },
+        variables: { genres: genres, count: 10 },
     });
 
     useEffect(() => {
         if (data) {
-            console.log(data["getMovieList"]);
+            // console.log(data["getMovieList"]);
             setMovies(data["getMovieList"]);
             moviesState = data["getMovieList"];
         }
@@ -102,8 +102,8 @@ function MovieSelection() {
         }
     };
     useEffect(() => {
-        console.log(selectedMovies);
-        console.log(moviesState);
+        // console.log(selectedMovies);
+        // console.log(moviesState);
         if (moviesState.length == 0 && selectedMovies.length != 0) {
             console.log("Empty");
             sendSelectedMovies({
@@ -113,7 +113,7 @@ function MovieSelection() {
             history.push("/main");
         }
     }, [selectedMovies, moviesState]);
-    console.log(Auth);
+    // console.log(Auth);
     if (Auth == undefined) return <></>;
     if (Auth === "") return <Redirect to="login" />;
     if (loading) {

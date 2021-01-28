@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const GET_MOVIES = gql`
-    query getMovieList($genres: [String]) {
-        getMovieList(genres: $genres) {
+    query getMovieList($genres: [String], $count: Int) {
+        getMovieList(genres: $genres, count: $count) {
             movie_name
             movie_id
             year

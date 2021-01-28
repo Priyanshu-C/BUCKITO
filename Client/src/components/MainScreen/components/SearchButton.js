@@ -1,60 +1,26 @@
 import React, { useEffect, useRef } from "react";
 import anime from "animejs";
 import "./SearchButton.scss";
-import { FaSistrix } from "react-icons/fa";
+import { IconContext } from "react-icons";
+import { ImSearch } from "react-icons/im";
 const SearchButton = () => {
     const input = useRef();
-    const timeline = anime.timeline({
-        easing: "easeOutExpo",
-        autoplay: false,
-        duration: 750,
-    });
-    useEffect(() => {
-        timeline
-            .add({
-                targets: [".input-box"],
-                width: "100%",
-                duration: 1200,
-                translateX: "-16rem",
-            })
-            .add(
-                {
-                    targets: ["form.example button"],
-                    duration: 1200,
-                },
-                0
-            )
-            .add({
-                targets: [".input-box"],
-                backgroundColor: "#FFFFFF",
-            })
-            .add(
-                {
-                    targets: [".input-box", "form.example button"],
-                    borderRadius: "3px",
-                },
-                300
-            );
-    });
-
-    const handleSubmit = (e) => {
+    const handleSearch = (e) => {
         e.preventDefault();
         input.current.focus();
-        timeline.restart();
     };
     return (
-        <div className="search">
-            <form className="example">
-                <button onClick={handleSubmit} type="submit">
-                    <FaSistrix className="search-icon" />
+        <div>
+            <form className="search-container">
+                <div className="search-container__inputbox">
+                    <input ref={input} type="text" name="search" />
+                </div>
+                <button
+                    onClick={handleSearch}
+                    className="search-container__submit"
+                >
+                    <ImSearch />
                 </button>
-                <input
-                    ref={input}
-                    className="input-box"
-                    type="text"
-                    placeholder="Search.."
-                    name="search"
-                />
             </form>
         </div>
     );
