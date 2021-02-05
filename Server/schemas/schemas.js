@@ -102,6 +102,16 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
+                console.log(args.id);
+                return User.findById(args.id);
+            },
+        },
+
+        getBucketList: {
+            type: UserType,
+            args: { id: { type: GraphQLString } },
+            resolve(parent, args) {
+                console.log(args.id);
                 return User.findById(args.id);
             },
         },
@@ -144,12 +154,14 @@ const Mutation = new GraphQLObjectType({
         addToBucketList: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
+                id: { type: GraphQLString },
                 movie: { type: GraphQLString },
             },
             resolve(parent, args) {
+                console.log(args.movie);
+                console.log(args.id);
                 return User.updateOne(
-                    { name: args.name },
+                    { _id: args.id },
                     {
                         $addToSet: { bucketList: args.movie },
                     }

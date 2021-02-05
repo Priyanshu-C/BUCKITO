@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import theme from "./ui/Theme";
+import "../icons/ZeniqNano.ttf";
 
 //Component import
 import GenreSelection from "./GenreSelectionScreen/GenreSelection";
@@ -9,8 +10,7 @@ import MainScreen from "./MainScreen/MainScreen";
 import MovieSelection from "./MovieSelectionScreen/MovieSelection";
 import Login from "./Login/Login";
 import axios from "./axios";
-import Modal from "./MainScreen/components/Modal";
-import Window from "./MainScreen/MainScreen";
+import LandingPage from "../components/LandingPage/LandingPage";
 
 export const AuthContext = createContext(undefined);
 
@@ -18,16 +18,25 @@ const App = () => {
     const [Auth, setAuth] = useState(undefined);
 
     useEffect(() => {
-        if (!localStorage.getItem("UserData")) {
-            axios.get("getUserID").then((res) => {
-                setAuth(res.data);
-                localStorage.setItem("UserData", res.data);
-                console.log(res.data);
-            });
-        } else {
-            setAuth(localStorage.getItem("UserData"));
+        if (localStorage.getItem("ID")) {
+            setAuth(localStorage.getItem("ID"));
         }
+        axios
+            .get("getUserID")
+            .then((res) => {
+                setAuth(res.data);
+                localStorage.setItem("ID", res.data);
+            })
+            .catch((e) => {
+                if (e.response) {
+                    if (e.response.status == 404) setAuth("404");
+                }
+            });
     }, []);
+
+    useEffect(() => {
+        console.log(Auth);
+    }, [Auth]);
 
     return (
         <>
@@ -35,14 +44,19 @@ const App = () => {
                 <ThemeProvider theme={theme}>
                     <BrowserRouter>
                         <Switch>
-                            <Route exact path="/" component={GenreSelection} />
+                            <Route exact path="/" component={LandingPage} />
+                            <Route
+                                exact
+                                path="/genreselection"
+                                component={GenreSelection}
+                            />
                             <Route
                                 exact
                                 path="/selectmovie"
                                 component={MovieSelection}
                             />
-                            <Route exact path="/main" component={MainScreen} />
                             <Route exact path="/login" component={Login} />
+                            <Route exact path="/main" component={MainScreen} />
                         </Switch>
                     </BrowserRouter>
                 </ThemeProvider>

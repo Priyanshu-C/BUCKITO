@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "./MovieCard.scss";
 import { FaStar } from "react-icons/fa";
-import axios from "axios";
-import { CardActionArea } from "@material-ui/core";
 import { motion } from "framer-motion";
-const MovieCard = ({ id, openModal, setModalData }) => {
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        const res = axios
-            .get(
-                `https://api.themoviedb.org/3/movie/${id}?api_key=0d7de19eeb38007459c158729a306b4d&language=en-US`
-            )
-            .then((res) => setData(res.data));
-    }, []);
+const MovieCard2 = ({ data, openModal, setModalData }) => {
+    const genreIdPairs = {
+        28: "Action",
+        12: "Adventure",
+        16: "Animation",
+        16: "Comedy",
+        16: "Crime",
+        99: "Documentary",
+        18: "Drama",
+        10751: "Family",
+        14: "Fantasy",
+        36: "History",
+        27: "Horror",
+        10402: "Music",
+        9648: "Mystery",
+        10749: "Romance",
+        878: "Science Fiction",
+        10770: "TV Movie ",
+        53: "Thriller",
+        10752: "War",
+        37: "Western",
+    };
+    // console.log(data);
     const handleModalAndData = () => {
         setModalData(data);
         openModal();
@@ -39,7 +51,20 @@ const MovieCard = ({ id, openModal, setModalData }) => {
                         <div className="card-container__genre-and-rating__genre">
                             {data.release_date.slice(0, 4)}
                             <span> , </span>
-                            {data.genres[0] && data.genres[0].name}
+                            {data.genres ? (
+                                <>
+                                    {data.genres[0] && data.genres[0].name}
+                                    <span>, </span>
+                                    {data.genres[1] && data.genres[1].name}
+                                </>
+                            ) : null}
+                            {data.genre_ids ? (
+                                <>
+                                    {genreIdPairs[data.genre_ids[0]]}
+                                    <span>, </span>
+                                    {genreIdPairs[data.genre_ids[1]]}
+                                </>
+                            ) : null}
                         </div>
                         <div className="card-container__genre-and-rating__rating">
                             <FaStar className="card-container__rating-icon" />
@@ -56,4 +81,4 @@ const MovieCard = ({ id, openModal, setModalData }) => {
     );
 };
 
-export default MovieCard;
+export default MovieCard2;

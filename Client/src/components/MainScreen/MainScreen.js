@@ -1,7 +1,7 @@
 //Important Dependencies
 import React, { useState, useEffect, useContext } from "react";
-import { Redirect } from "react-router-dom";
-import anime from "animejs";
+import { Redirect, useHistory } from "react-router-dom";
+import anime, { set } from "animejs";
 
 //Icons
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
@@ -17,8 +17,10 @@ import movieSvgBack from "./vectors/movieSvgBack.svg";
 
 //Components
 import MovieCard from "./components/MovieCard";
+import MovieCard2 from "./components/MovieCard2";
 import Modal from "./components/Modal";
 import SearchButton from "./components/SearchButton";
+import BucketList from "./components/BucketList";
 
 //Auth Context
 import { AuthContext } from "../App";
@@ -27,7 +29,12 @@ import { AuthContext } from "../App";
 import { GET_RECOMMENDATIONS, GET_MOVIES } from "./gql";
 import { useQuery } from "@apollo/client";
 
+//Server
+import axios from "../axios";
+import outerCalls from "axios";
+
 const MainScreen = () => {
+    //MODAL
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState(null);
     const openModal = () => {
@@ -41,16 +48,50 @@ const MainScreen = () => {
     const { loading, data, err } = useQuery(GET_RECOMMENDATIONS, {
         variables: { id: Auth },
     });
-
+    //GENRE Selection
     const [genre, setGenre] = useState(null);
     const genreQuery = useQuery(GET_MOVIES, {
         variables: { genres: [genre], count: 20 },
     });
+    const handleGenre = (e) => {
+        // console.log(e.target.outerText);
+        setGenre(String(e.target.outerText));
+        setSidebarSelection(null);
+        setSidebarSelectionData(null);
+    };
 
-    function shuffle(array) {
-        array.sort(() => Math.random() - 0.5);
-    }
+    //Sidebar Selection
+    const referenceKeys = {
+        "Now Playing": "now_playing",
+        Popular: "popular",
+        Upcoming: "upcoming",
+        "Trending Now": "latest",
+    };
+    const [sidebarSelection, setSidebarSelection] = useState(null);
+    const [sidebarSelectionData, setSidebarSelectionData] = useState(null);
+    const handleSidebarSelection = (e) => {
+        // console.log(e.target.innerText);
+        const selected = e.target.innerText;
+        setSidebarSelection(selected);
+        outerCalls
+            .get(
+                `https://api.themoviedb.org/3/movie/${referenceKeys[selected]}?api_key=0d7de19eeb38007459c158729a306b4d&language=en-US&page=1`
+            )
+            .then((res) => {
+                // console.log(res.data.results);
+                setSidebarSelectionData(res.data.results);
+            });
+    };
+    //Handle Made for you
+    const handleMadeForYou = () => {
+        setSidebarSelection(null);
+        setGenre(null);
+    };
+    // Data Processing
     useEffect(() => {
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
         if (data) {
             if (data && !genre) {
                 const recommendation = data.getRecommendation.recommendedMovies;
@@ -64,23 +105,15 @@ const MainScreen = () => {
                 if (genreQuery.data) {
                     const res = genreQuery.data.getMovieList;
                     array = res.map((id) => ["Ok", String(id.movie_id)]);
-                    console.log(array);
+                    // console.log(array);
                     setRecommendedData(array);
                 }
             }
         }
     }, [data, genreQuery]);
 
-    const handleGenre = (e) => {
-        console.log(e.target.outerText);
-        setGenre(String(e.target.outerText));
-    };
-    useEffect(() => {
-        console.log(recommendedData);
-    }, [recommendedData]);
-
+    // MORPH START
     let animatedOn;
-    let animatedOff;
     useEffect(() => {
         animatedOn = anime.timeline({
             duration: 1000,
@@ -97,16 +130,47 @@ const MainScreen = () => {
         });
     });
 
-    const handleRender = () => {
-        animatedOn.finished.then(() => animatedOn.reverse());
-        animatedOn.play();
+    const [bucketList, setBucketList] = useState(false);
+    const handleRenderIn = () => {
+        animatedOn.reverse();
+        animatedOn.restart();
+        setBucketList((x) => !x);
     };
 
+    const handleRender = () => {
+        animatedOn.finished.then(() => {
+            animatedOn.reverse();
+        });
+        animatedOn.play();
+        setBucketList((x) => !x);
+    };
+
+    //Handle Sign Out
+    let history = useHistory();
+    const handleSignOut = () => {
+        axios.get("/auth/logout");
+        history.push("/login");
+    };
+    // Auth Security
     // console.log(Auth);
     if (Auth == undefined) return <></>;
-    if (Auth === "") return <Redirect to="login" />;
+    if (Auth === "404") return <Redirect to="login" />;
     return (
         <>
+            <div>
+                <svg
+                    id="morph"
+                    height="100%"
+                    width="100%"
+                    viewBox="0 0 1920 1080"
+                    preserveAspectRatio="none"
+                >
+                    <path className="morph" d={vector[0]} />
+                </svg>
+            </div>
+
+            <BucketList bucketList={bucketList} handleRender={handleRenderIn} />
+
             <Modal
                 data={modalData}
                 showModal={showModal}
@@ -134,24 +198,39 @@ const MainScreen = () => {
                             </div>
                             <div className="sidebar-and-header__sidebar-menu">
                                 <ul>
-                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                    <li
+                                        onClick={handleSidebarSelection}
+                                        className="sidebar-and-header__sidebar-menu-items"
+                                    >
                                         <DiCodeigniter className="icons" />
                                         Now Playing
                                     </li>
-                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                    <li
+                                        onClick={handleSidebarSelection}
+                                        className="sidebar-and-header__sidebar-menu-items"
+                                    >
                                         <AiFillStar className="icons" />
                                         Popular
                                     </li>
-                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                    <li
+                                        onClick={handleSidebarSelection}
+                                        className="sidebar-and-header__sidebar-menu-items"
+                                    >
                                         <TiArrowRightThick className="icons" />
                                         Upcoming
                                     </li>
 
-                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                    <li
+                                        onClick={handleMadeForYou}
+                                        className="sidebar-and-header__sidebar-menu-items"
+                                    >
                                         <AiFillHeart className="icons" />
                                         Made for you
                                     </li>
-                                    <li className="sidebar-and-header__sidebar-menu-items">
+                                    <li
+                                        onClick={handleSidebarSelection}
+                                        className="sidebar-and-header__sidebar-menu-items"
+                                    >
                                         <HiChartBar className="icons" />
                                         Trending Now
                                     </li>
@@ -161,13 +240,20 @@ const MainScreen = () => {
                     </div>
                     <div className="main-body">
                         <div className="main-body__nav-bar">
-                            <div className="main-body__nav-bar-search"></div>
                             <div className="main-body__nav-bar-right-header">
-                                <SearchButton />
-                                <div className="main-body__nav-bar-right-header-link">
+                                <div className="main-body__nav-bar-search">
+                                    <SearchButton />
+                                </div>
+                                <div
+                                    onClick={handleRender}
+                                    className="main-body__nav-bar-right-header-link"
+                                >
                                     Bucket List
                                 </div>
-                                <div className="main-body__nav-bar-right-header-link">
+                                <div
+                                    onClick={handleSignOut}
+                                    className="main-body__nav-bar-right-header-link"
+                                >
                                     Sign Out
                                 </div>
                             </div>
@@ -177,43 +263,43 @@ const MainScreen = () => {
                             <div className="main-body__genre__genres">
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Action
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Scifi
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Drama
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Comedy
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Romance
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Thriller
                                 </button>
                                 <button
                                     onClick={handleGenre}
-                                    class="main-body__genre__genres-genre"
+                                    className="main-body__genre__genres-genre"
                                 >
                                     Horror
                                 </button>
@@ -221,7 +307,7 @@ const MainScreen = () => {
                         </div>
                         <div className="main-body__movies-container">
                             <div className="main-body__movies-container__movie-card">
-                                {recommendedData
+                                {recommendedData && !sidebarSelection
                                     ? recommendedData.map((movie) =>
                                           movie ? (
                                               <MovieCard
@@ -235,6 +321,16 @@ const MainScreen = () => {
                                           )
                                       )
                                     : " "}
+                                {sidebarSelection && sidebarSelectionData
+                                    ? sidebarSelectionData.map((data) => (
+                                          <MovieCard2
+                                              setModalData={setModalData}
+                                              openModal={openModal}
+                                              data={data}
+                                              key={data.id}
+                                          />
+                                      ))
+                                    : ""}
                             </div>
                         </div>
                         <div className="main-body__footer"></div>

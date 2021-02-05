@@ -12,8 +12,6 @@ const Login = () => {
 
     const Auth = useContext(AuthContext);
 
-    if (Auth) return <Redirect to="/" />;
-
     return (
         <>
             <CssBaseline />

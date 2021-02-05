@@ -14,7 +14,7 @@ const passport = require("passport");
 router.get("/logout", (req, res) => {
     console.log("logout");
     req.logout();
-    res.redirect("http://localhost:3000/login");
+    res.send("User logged out!");
 });
 
 router.get(
@@ -33,7 +33,7 @@ router.get(
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
     function (req, res) {
-        res.redirect("http://localhost:3000");
+        res.redirect("http://localhost:3000/main");
     }
 );
 

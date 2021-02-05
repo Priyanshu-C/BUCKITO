@@ -99,7 +99,7 @@ const GenreSelection = () => {
     //AuthRedirection
     const Auth = useContext(AuthContext);
     if (Auth == undefined) return <></>;
-    if (Auth == "") return <Redirect to="login" />;
+    if (Auth == "404") return <Redirect to="login" />;
 
     return (
         <div>

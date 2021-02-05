@@ -55,6 +55,7 @@ const MainScreen = () => {
         }
     }, [data]);
 
+    //MORPH
     let animatedOn;
     let animatedOff;
     useEffect(() => {
@@ -72,13 +73,12 @@ const MainScreen = () => {
             easing: "easeInQuad",
         });
     });
-
-    const classes = useStyles();
-
     const handleRender = () => {
         animatedOn.finished.then(() => animatedOn.reverse());
         animatedOn.play();
     };
+
+    const classes = useStyles();
 
     // console.log(Auth);
     if (Auth == undefined) return <></>;

@@ -53,13 +53,12 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 
 //get UserId
-app.get("/getUserID", (req, res) => {
-    if (!req.user) res.send(null);
+app.get("/getUserID", authCheck, (req, res) => {
     console.log("User fetching ID");
     res.json(req.user.id);
 });
 
-app.get("/addMovieToRecommend", async (req, res) => {
+app.get("/addMovieToRecommend", authCheck, async (req, res) => {
     console.log(req.query.movie);
     const id = req.query.id;
     const movieName = req.query.movie;

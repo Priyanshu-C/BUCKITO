@@ -5,8 +5,10 @@ html {
     background-color: rgb(22, 54, 102);
 }
 .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &__inputbox {
-        margin-top: 1.5rem;
         display: inline-block;
         width: 13rem;
         position: relative;
@@ -24,6 +26,7 @@ html {
     }
     &__inputbox input[type="text"]:focus {
         border-bottom: 2px solid rgb(0, 0, 0);
+        transform: translateY(10px);
     }
 
     &__submit {
@@ -31,7 +34,11 @@ html {
         color: white;
         border: none;
         font-size: 1.5rem;
-        transform: translateX(-1.8rem);
+        transform: translateX(-1.8rem) translateY(2px);
         outline: none;
+        transition: all 0.2s;
+    }
+    &__submit:hover {
+        transform: scale(1.1) translateX(-1.7rem) translateY(2px);
     }
 }
