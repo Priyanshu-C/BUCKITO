@@ -23,28 +23,6 @@ function MovieSelection() {
         SEND_SELECTED_MOVIES
     );
     const Auth = useContext(AuthContext);
-    useEffect(() => {
-        let animated = anime
-            .timeline()
-            .add({
-                targets: ".polyTop",
-                autoplay: true,
-                rotate: "720deg",
-                loop: true,
-                duration: 1500000,
-            })
-            .add(
-                {
-                    targets: ".polyBottom",
-                    autoplay: true,
-                    rotate: "-720deg",
-                    loop: true,
-                    duration: 1500000,
-                },
-                0
-            );
-    });
-
     const [selectedMovies, setSelectedMovies] = useState([]);
     const classes = useStyles();
     const [movies, setMovies] = useState([]);

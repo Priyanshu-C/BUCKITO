@@ -3,7 +3,6 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 export default makeStyles((theme) => ({
     mainContainer: {
         minHeight: "100vh",
-        background: "#ecf0f3",
     },
     root: {
         backgroundColor: "transparent",

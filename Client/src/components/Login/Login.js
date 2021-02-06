@@ -6,14 +6,14 @@ import "./button.css";
 import GoogleButton from "react-google-button";
 import { AuthContext } from "../App";
 import { Redirect } from "react-router-dom";
+import "./Login.scss"
 
 const Login = () => {
     const classes = useStyles();
-
     const Auth = useContext(AuthContext);
-
     return (
         <>
+            <div className="login-background"></div>
             <CssBaseline />
             <Grid
                 className={classes.mainContainer}
@@ -26,7 +26,11 @@ const Login = () => {
                     <Grid container>
                         <Typography
                             variant="h5"
-                            style={{ width: "6em", textAlign: "left" }}
+                            style={{
+                                width: "6em",
+                                textAlign: "left",
+                                fontFamily: "ZeniqNano",
+                            }}
                         >
                             BUCKITO
                         </Typography>
@@ -83,7 +87,7 @@ const Login = () => {
                         <Grid container justify="center">
                             <a
                                 style={{ textDecoration: "none" }}
-                                href="http://localhost:4000/auth/google"
+                                href="https://buckito-backend.herokuapp.com/auth/google"
                             >
                                 <GoogleButton />
                             </a>

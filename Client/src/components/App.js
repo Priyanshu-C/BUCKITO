@@ -28,7 +28,9 @@ const App = () => {
                 localStorage.setItem("ID", res.data);
             })
             .catch((e) => {
+                console.log("Eorrrrrror");
                 if (e.response) {
+                    console.log(e);
                     if (e.response.status == 404) setAuth("404");
                 }
             });

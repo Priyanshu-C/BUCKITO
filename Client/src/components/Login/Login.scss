@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login-background {
+    width: 100vw;
+    height: 100vh;
+    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0% 100%);
+    background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
+    position: absolute;
+}

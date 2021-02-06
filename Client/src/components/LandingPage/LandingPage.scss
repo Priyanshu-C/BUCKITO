@@ -12,7 +12,7 @@
 
 .landingPageContainer {
     width: 100%;
-    height: 300vh;
+    height: 250vh;
     overflow: hidden;
     position: absolute;
     background-color: white;
@@ -23,7 +23,7 @@
         top: 0.3rem;
         height: 3rem;
         cursor: pointer;
-        z-index: 3;
+        z-index: 7;
     }
 }
 
@@ -36,7 +36,7 @@
     clip-path: polygon(0 0, 100% 0, 100% 59%, 0 83%);
     background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
     position: relative;
-    z-index: 2;
+    z-index: 6;
 
     &__signOptions {
         position: absolute;
@@ -64,7 +64,7 @@
         height: 33rem;
         top: 9vh;
         right: 8vw;
-        z-index: 3;
+        z-index: 7;
     }
 
     &__header-and-sub {
@@ -109,47 +109,56 @@
 
 .second-section {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-    &__headingSubHeading {
-        background: rgb(255, 255, 255);
-        background: linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.4) 50%,
-            rgba(255, 255, 255, 1) 100%
-        );
-        height: 100vh;
-        width: 100vw;
-        flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    // width: 100vw;
+    height: 80vh;
+
+    &__director {
+        flex: 0 0 50%;
         display: flex;
+        align-items: center;
+        &-img {
+            width: 90%;
+        }
+    }
+    &__headingSubHeading {
+        flex: 0 0 40%;
+        display: flex;
+        flex-wrap: wrap;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: absolute;
     }
     &__heading {
+        flex: 0 0 100%;
         width: 100%;
         font-family: "Ubuntu";
-        font-size: 4rem;
+        font-size: 6rem;
         display: flex;
-        color: black;
-        display: flex;
+        color: #a37df6;
+        text-align: end;
+        line-height: 90%;
         justify-content: center;
+        align-items: center;
+        z-index: 2;
     }
-    &__subheading {
-        width: 100%;
-        font-family: "Abel";
-        font-size: 2.5rem;
-        display: flex;
-        color: black;
-        display: flex;
-        justify-content: center;
-    }
-    .superHero {
-        height: 7rem;
+    &__magic-divider {
+        border-left: black 6px solid;
+        border-radius: 5px;
+        height: 26rem;
+        background-color: white;
+        width: 50%;
         position: absolute;
+        z-index: 3;
+        right: 2rem;
     }
+
+    // .superHero {
+    //     height: 7rem;
+    //     position: absolute;
+    // }
 }
 
 .clip {
@@ -167,13 +176,34 @@
 }
 
 .third-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
     width: 100%;
-    height: 60vh;
-}
-.footer-container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 10%;
-    background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
+    height: 30vh;
+    &__additionalInfo {
+        // position: absolute;
+        width: 95%;
+        height: 5rem;
+        background: #faa84a;
+        border: 3px solid #000000;
+        box-sizing: border-box;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &-info {
+            font-family: "Ubuntu";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 2rem;
+        }
+    }
+    &__footer-container {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 10%;
+        background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
+    }
 }

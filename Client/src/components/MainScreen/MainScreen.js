@@ -151,6 +151,15 @@ const MainScreen = () => {
         axios.get("/auth/logout");
         history.push("/login");
     };
+    const DisplayGenres = [
+        "Action",
+        "Scifi",
+        "Drama",
+        "Comedy",
+        "Romance",
+        "Thriller",
+        "Horror",
+    ];
     // Auth Security
     // console.log(Auth);
     if (Auth == undefined) return <></>;
@@ -169,7 +178,11 @@ const MainScreen = () => {
                 </svg>
             </div>
 
-            <BucketList bucketList={bucketList} handleRender={handleRenderIn} />
+            <BucketList
+                showModal={showModal}
+                bucketList={bucketList}
+                handleRender={handleRenderIn}
+            />
 
             <Modal
                 data={modalData}
@@ -258,51 +271,18 @@ const MainScreen = () => {
                                 </div>
                             </div>
                         </div>
+
                         <div className="main-body__genre">
                             <div class="main-body__genre__header">Genres</div>
                             <div className="main-body__genre__genres">
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Action
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Scifi
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Drama
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Comedy
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Romance
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Thriller
-                                </button>
-                                <button
-                                    onClick={handleGenre}
-                                    className="main-body__genre__genres-genre"
-                                >
-                                    Horror
-                                </button>
+                                {DisplayGenres.map((DGenre) => (
+                                    <button
+                                        onClick={handleGenre}
+                                        className="main-body__genre__genres-genre"
+                                    >
+                                        {DGenre}
+                                    </button>
+                                ))}
                             </div>
                         </div>
                         <div className="main-body__movies-container">
