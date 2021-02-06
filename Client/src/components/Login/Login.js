@@ -87,7 +87,7 @@ const Login = () => {
                         <Grid container justify="center">
                             <a
                                 style={{ textDecoration: "none" }}
-                                href="https://buckito-backend.herokuapp.com/auth/google"
+                                href="http://localhost:4000/auth/google"
                             >
                                 <GoogleButton />
                             </a>

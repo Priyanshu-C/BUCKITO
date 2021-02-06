@@ -23,7 +23,7 @@ passport.use(
         function (token, tokenSecret, profile, done) {
             User.findOne({ googleId: profile.id }).then((currentUser) => {
                 if (currentUser) {
-                    console.log("current user: ", currentUser);
+                    console.log("Current user: ", currentUser.id);
                     done(null, currentUser);
                 } else {
                     new User({
@@ -33,7 +33,7 @@ passport.use(
                     })
                         .save()
                         .then((newUser) => {
-                            console.log("created new user: ", newUser);
+                            console.log("Created new user: ", newUser.id);
                             done(null, newUser);
                         });
                 }

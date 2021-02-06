@@ -3,8 +3,8 @@
 module.exports = {
     google: {
         clientID:
-            "1012958069034-edhu3914cbah3ammgk3qo44h7rtlhkp2.apps.googleusercontent.com",
-        clientSecret: "trk2OVhKfhOC5geYV24ogXYJ",
+            "91817220404-1kejfme689akevbf51ve01lt2gmfbupe.apps.googleusercontent.com",
+        clientSecret: "s7K2SDxjw6Ip993X867nRd7M",
     },
     mongodb: {
         dbURI:

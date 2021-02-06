@@ -66,7 +66,7 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                console.log(args.id);
+                // console.log(args.id);
                 return User.findById(args.id);
             },
         },
@@ -84,8 +84,8 @@ const RootQuery = new GraphQLObjectType({
                 genres: { type: new GraphQLList(GraphQLString) },
             },
             resolve(parent, args) {
-                console.log(args.genres);
-                console.log(args.count);
+                // console.log(args.genres);
+                // console.log(args.count);
                 let movieArray = [];
                 args.genres.map((genre) =>
                     movieArray.push(...genreArray[genre])
@@ -102,7 +102,7 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                console.log(args.id);
+                // console.log(args.id);
                 return User.findById(args.id);
             },
         },
@@ -111,7 +111,7 @@ const RootQuery = new GraphQLObjectType({
             type: UserType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                console.log(args.id);
+                // console.log(args.id);
                 return User.findById(args.id);
             },
         },
@@ -158,8 +158,8 @@ const Mutation = new GraphQLObjectType({
                 movie: { type: GraphQLString },
             },
             resolve(parent, args) {
-                console.log(args.movie);
-                console.log(args.id);
+                // console.log(args.movie);
+                // console.log(args.id);
                 return User.updateOne(
                     { _id: args.id },
                     {
@@ -171,12 +171,13 @@ const Mutation = new GraphQLObjectType({
         removeToBucketList: {
             type: UserType,
             args: {
-                name: { type: GraphQLString },
+                id: { type: GraphQLString },
                 movie: { type: GraphQLString },
             },
             resolve(parent, args) {
+                // console.log(chalk.yellow(args.movie, "is Being removed from BucketList"));
                 return User.updateOne(
-                    { name: args.name },
+                    { _id: args.id },
                     {
                         $pull: { bucketList: args.movie },
                     }

@@ -33,7 +33,10 @@ router.get(
     "/google/callback",
     passport.authenticate("google", { failureRedirect: "/login" }),
     function (req, res) {
-        res.redirect("http://localhost:3000/main");
+        console.log(req.user.genre.length === 0);
+        if (req.user.genre.length === 0)
+            res.redirect("http://localhost:3000/genreselection");
+        else res.redirect("http://localhost:3000/main");
     }
 );
 

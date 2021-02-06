@@ -16,7 +16,12 @@ const getRecommendation = axios.create({
     baseURL: "http://127.0.0.1:8000/",
 });
 // allow cross-origin requests
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    })
+);
 
 app.use(
     cookieSession({
@@ -26,20 +31,21 @@ app.use(
 );
 
 // Used to get credentials passed
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Origin", req.headers.origin);
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
-    );
-    if ("OPTIONS" == req.method) {
-        res.send(200);
-    } else {
-        next();
-    }
-});
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header("Access-Control-Allow-Origin", req.headers.origin);
+//     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+//     );
+//     if ("OPTIONS" == req.method) {
+//         res.send(200);
+//     } else {
+//         next();
+//     }
+// });
+
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -58,14 +64,16 @@ app.get("/getUserID", authCheck, (req, res) => {
     res.json(req.user.id);
 });
 
-app.get("/addMovieToRecommend", authCheck, async (req, res) => {
+app.get("/addMovieToRecommend", async (req, res) => {
+    console.log("Predicting on -");
     console.log(req.query.movie);
     const id = req.query.id;
     const movieName = req.query.movie;
     var recommendResponse = await axios.post(
-        `http://127.0.0.1:8000/movie?movie=${movieName}`
+        `https://buckito-recommender.herokuapp.com/movie?movie=${movieName}`
     );
     recommendResponse = recommendResponse.data.data;
+    console.log(recommendResponse);
     var movies = [];
     var movie = "";
     for (var i = 0; i < recommendResponse.length; i = i + 2) {
