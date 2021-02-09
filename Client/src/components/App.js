@@ -56,7 +56,10 @@ const App = () => {
                                 path="/selectmovie"
                                 component={MovieSelection}
                             />
-                            <Route exact path="/login" component={Login} />
+
+                            <Route exact path="/login">
+                                <Login setAuth={setAuth} />
+                            </Route>
                             <Route exact path="/main" component={MainScreen} />
                         </Switch>
                     </BrowserRouter>

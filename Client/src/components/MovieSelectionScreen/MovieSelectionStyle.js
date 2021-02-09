@@ -20,13 +20,14 @@ export default makeStyles((theme) => ({
         align: "center",
         color: "white",
         alignText: "center",
+        fontFamily: "Ubuntu",
     },
     SubText: {
         marginTop: "1vh",
         fontSize: "2rem",
         align: "center",
         color: "#abdef5",
-        fontFamily: "Architects Daughter",
+        fontFamily: "Abel",
     },
     cardMovieTitle: {
         float: "bottom",
@@ -40,14 +41,16 @@ export default makeStyles((theme) => ({
     },
 
     cardContainer: {
+        "@media(minWidth: 500px)": {
+            width: "70%",
+        },
         width: "100%",
-        maxWidth: "260px",
         height: "400px",
         display: "flex",
+        justifyContent: "center",
     },
     card: {
         marginTop: "10vh",
-        marginLeft: "9rem",
         position: "relative",
         backgroundColor: "white",
         width: "80vw",

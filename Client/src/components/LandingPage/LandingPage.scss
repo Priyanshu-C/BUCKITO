@@ -4,6 +4,18 @@
     box-sizing: border-box;
 }
 
+html {
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: 80%;
+    }
+    @media only screen and (min-width: 500px) and (max-width: 768px) {
+        font-size: 75%;
+    }
+    @media only screen and (max-width: 500px) {
+        font-size: 65%;
+    }
+}
+
 @font-face {
     font-family: "ZeniqNano";
     src: local("ZeniqNano"), url("../../icons/ZeniqNano.ttf") format("truetype");
@@ -12,10 +24,10 @@
 
 .landingPageContainer {
     width: 100%;
-    height: 250vh;
     overflow: hidden;
     position: absolute;
     background-color: white;
+
     &__logo {
         position: fixed;
         z-index: 5;
@@ -24,6 +36,25 @@
         height: 3rem;
         cursor: pointer;
         z-index: 7;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        &__logo {
+            left: 0.65rem;
+            top: 0.7rem;
+        }
+    }
+    @media only screen and (min-width: 500px) and (max-width: 768px) {
+        &__logo {
+            left: 0.65rem;
+            top: 0.55rem;
+        }
+    }
+    @media only screen and (max-width: 500px) {
+        &__logo {
+            left: 0.65rem;
+            top: 0.60rem;
+        }
     }
 }
 
@@ -37,6 +68,14 @@
     background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
     position: relative;
     z-index: 6;
+    @media only screen and (min-width: 500px) and (max-width: 768px) {
+        clip-path: polygon(0 0, 100% 0, 100% 66%, 0 80%);
+        height: 80vh;
+    }
+    @media only screen and (max-width: 500px) {
+        clip-path: polygon(0 0, 100% 0, 100% 66%, 0 80%);
+        height: 80vh;
+    }
 
     &__signOptions {
         position: absolute;
@@ -50,6 +89,9 @@
         &-option {
             margin: 1rem;
             transition: all 0.2s;
+            @media only screen and (max-width: 500px) {
+                margin-top: 2rem;
+            }
         }
         &-option:last-child {
             margin-right: 3rem;
@@ -65,6 +107,20 @@
         top: 9vh;
         right: 8vw;
         z-index: 7;
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+            top: 9vh;
+            right: 8vw;
+            height: 33rem;
+        }
+
+        @media only screen and (min-width: 500px) and (max-width: 768px) {
+            top: 9vh;
+            right: 8vw;
+            height: 33rem;
+        }
+        @media only screen and (max-width: 500px) {
+            display: none;
+        }
     }
 
     &__header-and-sub {
@@ -73,6 +129,10 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+
+        @media only screen and (max-width: 500px) {
+            flex: 1;
+        }
     }
     &__header {
         user-select: none;
@@ -80,6 +140,10 @@
         font-family: "ZeniqNano";
         font-size: 6rem;
         color: white;
+        @media only screen and (max-width: 500px) {
+            font-size: 8rem;
+            margin-top: 15vh;
+        }
     }
     &__sub {
         user-select: none;
@@ -87,6 +151,9 @@
         font-family: "ubuntu";
         font-size: 1.5rem;
         color: #fdbb47;
+        @media only screen and (max-width: 500px) {
+            font-size: 2rem;
+        }
     }
     &__button {
         font-size: 1.5rem;
@@ -111,16 +178,38 @@
     position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     // width: 100vw;
-    height: 80vh;
+    height: 100vh;
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        height: 60vh;
+    }
+
+    @media only screen and (min-width: 500px) and (max-width: 768px) {
+        height: 65vh;
+    }
+    @media only screen and (max-width: 500px) {
+        height: 70vh;
+    }
 
     &__director {
         flex: 0 0 50%;
         display: flex;
         align-items: center;
+        justify-content: center;
         &-img {
-            width: 90%;
+            z-index: 4;
+            position: absolute;
+            width: 40%;
+        }
+        @media only screen and (max-width: 500px) {
+            flex: 0 0 100%;
+            &-img {
+                width: 70%;
+            }
+            justify-content: center;
+            align-items: center;
         }
     }
     &__headingSubHeading {
@@ -130,10 +219,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        @media only screen and (max-width: 500px) {
+            flex: 0 0 100%;
+        }
     }
     &__heading {
         flex: 0 0 100%;
-        width: 100%;
         font-family: "Ubuntu";
         font-size: 6rem;
         display: flex;
@@ -143,6 +234,16 @@
         justify-content: center;
         align-items: center;
         z-index: 2;
+        margin-right: 2rem;
+        @media only screen and (min-width: 500px) and (max-width: 768px) {
+            margin-right: 0rem;
+            justify-content: flex-end;
+        }
+        @media only screen and (max-width: 500px) {
+            margin-right: 0rem;
+            flex: 0 0 100%;
+            text-align: center;
+        }
     }
     &__magic-divider {
         border-left: black 6px solid;
@@ -153,6 +254,14 @@
         position: absolute;
         z-index: 3;
         right: 2rem;
+        @media only screen and (min-width: 500px) and (max-width: 768px) {
+            width: 100%;
+            right: 1rem;
+        }
+        @media only screen and (max-width: 500px) {
+            width: 100%;
+            right: 1rem;
+        }
     }
 
     // .superHero {
@@ -161,49 +270,66 @@
     // }
 }
 
-.clip {
-    &-holder {
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        position: absolute;
-    }
-    &-video {
-        object-fit: inherit;
-        width: 100%;
-        height: 100%;
-    }
-}
+// .clip {
+//     &-holder {
+//         width: 100vw;
+//         height: 100vh;
+//         overflow: hidden;
+//         position: absolute;
+//     }
+//     &-video {
+//         object-fit: inherit;
+//         width: 100%;
+//         height: 100%;
+//     }
+// }
 
 .third-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
-    width: 100%;
-    height: 30vh;
+    align-items: center;
+    width: 100vw;
+
     &__additionalInfo {
-        // position: absolute;
+        margin: 1rem 0 1rem 0;
         width: 95%;
         height: 5rem;
         background: #faa84a;
         border: 3px solid #000000;
-        box-sizing: border-box;
         border-radius: 16px;
         display: flex;
         align-items: center;
+        overflow: hidden;
         justify-content: space-around;
         &-info {
             font-family: "Ubuntu";
             font-style: normal;
             font-weight: normal;
             font-size: 2rem;
+            word-wrap: wrap;
+        }
+        @media only screen and (min-width: 500px) and (max-width: 768px) {
+            border-radius: 8px;
+            justify-content: space-evenly;
+            &-info {
+                margin: 1rem;
+            }
+        }
+        @media only screen and (max-width: 500px) {
+            border-radius: 4px;
+            justify-content: space-evenly;
+            height: 8rem;
+            &-info {
+                margin: 1rem;
+                font-size: 1.5rem;
+            }
         }
     }
     &__footer-container {
-        position: absolute;
         bottom: 0;
-        width: 100%;
-        height: 10%;
+        width: 100vw;
+        height: 25vh;
         background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
     }
 }

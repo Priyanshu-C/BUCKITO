@@ -32,6 +32,7 @@ import { useQuery } from "@apollo/client";
 //Server
 import axios from "../axios";
 import outerCalls from "axios";
+import SideNaV from "./components/SideNaV";
 
 const MainScreen = () => {
     //MODAL
@@ -67,9 +68,11 @@ const MainScreen = () => {
         Upcoming: "upcoming",
         "Trending Now": "latest",
     };
+    const [showSidenav, setShowSidenav] = useState(false);
     const [sidebarSelection, setSidebarSelection] = useState(null);
     const [sidebarSelectionData, setSidebarSelectionData] = useState(null);
     const handleSidebarSelection = (e) => {
+        setShowSidenav((select) => !select);
         // console.log(e.target.innerText);
         const selected = e.target.innerText;
         setSidebarSelection(selected);
@@ -84,6 +87,7 @@ const MainScreen = () => {
     };
     //Handle Made for you
     const handleMadeForYou = () => {
+        setShowSidenav((select) => !select);
         setSidebarSelection(null);
         setGenre(null);
     };
@@ -148,7 +152,8 @@ const MainScreen = () => {
     //Handle Sign Out
     let history = useHistory();
     const handleSignOut = () => {
-        axios.get("/auth/logout");
+        localStorage.removeItem("token");
+        localStorage.removeItem("ID");
         history.push("/login");
     };
     const DisplayGenres = [
@@ -160,6 +165,7 @@ const MainScreen = () => {
         "Thriller",
         "Horror",
     ];
+
     // Auth Security
     // console.log(Auth);
     if (Auth == undefined) return <></>;
@@ -253,6 +259,15 @@ const MainScreen = () => {
                     </div>
                     <div className="main-body">
                         <div className="main-body__nav-bar">
+                            <SideNaV
+                                showSidenav={showSidenav}
+                                setShowSidenav={setShowSidenav}
+                                handleSidebarSelection={handleSidebarSelection}
+                                handleMadeForYou={handleMadeForYou}
+                            />
+                            <div className="main-body__nav-bar__header">
+                                BUCKITO
+                            </div>
                             <div className="main-body__nav-bar-right-header">
                                 <div className="main-body__nav-bar-search">
                                     <SearchButton />

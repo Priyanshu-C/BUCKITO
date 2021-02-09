@@ -10,7 +10,5 @@ module.exports = {
         dbURI:
             "mongodb+srv://master:worldwar3@cluster0.nngkj.mongodb.net/<Cluster0>?retryWrites=true&w=majority",
     },
-    session: {
-        cookieKey: "heythere",
-    },
+    jwtSecret: "heythere",
 };

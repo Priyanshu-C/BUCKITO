@@ -4,21 +4,27 @@ const keys = require("../keys");
 const User = require("../models/User");
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+   return done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+    console.log(id,"deserializer");
     User.findById(id).then((user) => {
-        done(null, user);
+       return done(null, user);
     });
 });
+
+const choice = {
+    1: "https://buckito-backend.herokuapp.com/auth/google/callback",
+    2: "http://localhost:4000/auth/google/callback",
+};
 
 passport.use(
     new GoogleStrategy(
         {
             clientID: keys.google.clientID,
             clientSecret: keys.google.clientSecret,
-            callbackURL: "http://localhost:4000/auth/google/callback",
+            callbackURL: choice[1],
         },
         function (token, tokenSecret, profile, done) {
             User.findOne({ googleId: profile.id }).then((currentUser) => {

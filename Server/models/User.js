@@ -4,16 +4,22 @@ const mongoose = require("mongoose"); // Erase if already required
 var userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        index: true,
     },
-    picture: String,
-    googleId: String,
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     dateOfBirth: String,
     alreadyWatchedMovies: [String],
     recommendedMovies: [String],
     bucketList: [String],
     genre: [String],
+    password: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 });
 
 //Export the model

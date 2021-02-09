@@ -5,9 +5,35 @@
 }
 
 .login-background {
+    z-index: 1;
     width: 100vw;
     height: 100vh;
-    clip-path: polygon(0 75%, 100% 75%, 100% 100%, 0% 100%);
-    background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
+    clip-path: polygon(
+        0% 0%,
+        0% 100%,
+        30% 0,
+        100% 0,
+        70% 100%,
+        100% 100%,
+        100% 0
+    );
+    background: linear-gradient(45deg, #5c258d 0%, #4389a2 100%);
     position: absolute;
+    @media only screen and (max-width: 500px) {
+        clip-path: polygon(0% 0%, 0% 25%, 35% 0);
+    }
+}
+.LoginPageContainer__logo {
+    position: fixed;
+    z-index: 5;
+    left: 0.5rem;
+    top: 0.3rem;
+    height: 5rem;
+    cursor: pointer;
+    z-index: 7;
+    @media only screen and (max-width: 500px) {
+        height: 5rem;
+        left: 1rem;
+        top: 1rem;
+    }
 }

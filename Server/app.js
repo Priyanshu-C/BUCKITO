@@ -4,6 +4,7 @@ const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schemas/schemas");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const app = express();
 const passport = require("passport");
 const mongodb = require("./config/mongodb");
@@ -12,43 +13,42 @@ const authRoutes = require("./routes/auth");
 const passportSetup = require("./config/passport-setup");
 const authCheck = require("./middleware/authcheck");
 const User = require("./models/User");
-const getRecommendation = axios.create({
-    baseURL: "http://127.0.0.1:8000/",
-});
+
 // allow cross-origin requests
-app.use(
-    cors({
-        origin: "http://localhost:3000",
-        credentials: true,
-    })
-);
 
-app.use(
-    cookieSession({
-        maxAge: 24 * 60 * 60 * 1000,
-        keys: [keys.session.cookieKey],
-    })
-);
+// app.use(
+//     cookieSession({
+//         name: "SessionId",
+//         maxAge: 8400000000000,
+//         keys: [keys.session.cookieKey],
+//         secure: false,
+//     })
+// );
+const origin = { 1: "http://hashigma.com", 2: "http://localhost:3000" };
+app.use(express.json());
+app.use(cors());
 
-// Used to get credentials passed
+// app.use(
+//     cors({
+//         origin: origin[1],
+//         methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+//         credentials: true,
+//     })
+// );
+
 // app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://hashigma.com/");
 //     res.header("Access-Control-Allow-Credentials", true);
-//     res.header("Access-Control-Allow-Origin", req.headers.origin);
-//     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
 //     res.header(
 //         "Access-Control-Allow-Headers",
-//         "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+//         "Origin, X-Requested-With, Content-Type, Accept"
 //     );
-//     if ("OPTIONS" == req.method) {
-//         res.send(200);
-//     } else {
-//         next();
-//     }
+//     next();
 // });
 
 // initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // set up routes
 app.get("/", (req, res) => {
@@ -58,12 +58,14 @@ app.get("/", (req, res) => {
 // set up routes
 app.use("/auth", authRoutes);
 
-//get UserId
+// get UserId
 app.get("/getUserID", authCheck, (req, res) => {
     console.log("User fetching ID");
     res.json(req.user.id);
 });
 
+
+//Recommend on movie
 app.get("/addMovieToRecommend", async (req, res) => {
     console.log("Predicting on -");
     console.log(req.query.movie);
@@ -98,6 +100,7 @@ app.use(
     })
 );
 
-app.listen(4000, () => {
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
     console.log("now listening for requests on port 4000");
 });

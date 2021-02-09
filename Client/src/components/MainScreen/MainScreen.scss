@@ -23,7 +23,9 @@
     display: flex;
     flex: 0 0 15%;
     flex-direction: column;
-
+    @media only screen and (max-width: 500px) {
+        display: none;
+    }
     &__header {
         user-select: none;
         font-family: "ZeniqNano";
@@ -75,10 +77,28 @@
     &__nav-bar {
         display: flex;
         flex: 0 0 10%;
+        &__header {
+            user-select: none;
+            font-family: "ZeniqNano";
+            display: none;
+            font-size: 3rem;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            @media only screen and (max-device-width: 500px) {
+                display: flex;
+            }
+        }
+        @media only screen and (max-width: 500px) {
+            flex: 0 0 10%;
+        }
         &-search {
             display: flex;
             justify-content: center;
             align-items: center;
+            @media only screen and (max-width: 500px) {
+                display: none;
+            }
         }
         &-right-header {
             flex: 1;
@@ -101,9 +121,15 @@
         }
     }
     &__genre {
+        @media only screen and (max-width: 500px) {
+            flex: 0 0 5%;
+        }
         display: flex;
         flex: 0 0 10%;
         &__header {
+            @media only screen and (max-width: 500px) {
+                display: none;
+            }
             user-select: none;
             flex: 0 0 15%;
             font-family: "Ubuntu";
@@ -112,6 +138,9 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            @media only screen and (max-width: 500px) {
+                margin-left: 2rem;
+            }
         }
         &__genres {
             flex: 1;
@@ -119,6 +148,9 @@
             justify-content: flex-end;
             align-items: center;
             flex-wrap: wrap;
+            @media only screen and (max-width: 500px) {
+                justify-content: center;
+            }
             &-genre:hover {
                 color: black;
             }
@@ -143,6 +175,9 @@
         }
     }
     &__movies-container {
+        @media only screen and (max-width: 500px) {
+            margin: 0.25rem;
+        }
         flex: 1;
         overflow: auto;
         &__movie-card {
@@ -194,6 +229,12 @@
     -ms-transition: 0.08s ease-in;
     -moz-transition: 0.08s ease-in;
     -webkit-transition: 0.08s ease-in;
+    @media only screen and (max-width: 500px) {
+        margin: 2px 2px;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        padding: 2px 2px;
+    }
 }
 
 .icons {
@@ -213,17 +254,23 @@
     opacity: 0.3;
     filter: blur(1px);
     z-index: -1;
+    @media only screen and (max-width: 500px) {
+        display: none;
+    }
 }
 
 #morph {
     width: 100%;
     transform: scaleY(3.5);
     top: 0px;
-
     position: fixed;
     z-index: 2;
     pointer-events: none;
     &path {
         fill: rgb(111, 39, 158);
+    }
+    @media only screen and (max-width: 500px) {
+        transform: scaleY(3.1);
+        width: 130%;
     }
 }

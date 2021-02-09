@@ -11,6 +11,13 @@
     background-color: black;
     position: fixed;
     z-index: 5;
+    @media only screen and (min-width: 500px) and (max-width: 768px) {
+        height: 40px;
+    }
+    @media only screen and  (max-width: 500px) {
+        height: 50px;
+    }
+   
 }
 .NavBar {
     &-header {
@@ -35,7 +42,6 @@
         cursor: pointer;
         margin: 1rem;
         transition: all 0.2s;
- 
     }
     &-option:last-child {
         margin-right: 3rem;
