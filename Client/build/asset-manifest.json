@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.20be433b.chunk.css",
+    "main.js": "/static/js/main.40b1d24b.chunk.js",
+    "main.js.map": "/static/js/main.40b1d24b.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.90ec15dc.js",
+    "runtime-main.js.map": "/static/js/runtime-main.90ec15dc.js.map",
+    "static/js/2.5b166540.chunk.js": "/static/js/2.5b166540.chunk.js",
+    "static/js/2.5b166540.chunk.js.map": "/static/js/2.5b166540.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.20be433b.chunk.css.map": "/static/css/main.20be433b.chunk.css.map",
+    "static/js/2.5b166540.chunk.js.LICENSE.txt": "/static/js/2.5b166540.chunk.js.LICENSE.txt",
+    "static/media/1.ac4b5fa4.svg": "/static/media/1.ac4b5fa4.svg",
+    "static/media/2.c54e44de.svg": "/static/media/2.c54e44de.svg",
+    "static/media/3.7ab1323e.svg": "/static/media/3.7ab1323e.svg",
+    "static/media/3d-glasses.d7b391eb.svg": "/static/media/3d-glasses.d7b391eb.svg",
+    "static/media/4.efeb6e89.svg": "/static/media/4.efeb6e89.svg",
+    "static/media/5.abb6ba2b.svg": "/static/media/5.abb6ba2b.svg",
+    "static/media/6.6755dbd9.svg": "/static/media/6.6755dbd9.svg",
+    "static/media/7.a7050da4.svg": "/static/media/7.a7050da4.svg",
+    "static/media/LogoW.2b642766.svg": "/static/media/LogoW.2b642766.svg",
+    "static/media/Polygontop.e5bb4235.svg": "/static/media/Polygontop.e5bb4235.svg",
+    "static/media/LandingPage.scss": "/static/media/ZeniqNano.ed62c9c1.ttf",
+    "static/media/award-1.4db1d841.svg": "/static/media/award-1.4db1d841.svg",
+    "static/media/director.336faf47.png": "/static/media/director.336faf47.png",
+    "static/media/firstsection.93fb9441.svg": "/static/media/firstsection.93fb9441.svg",
+    "static/media/hamlet.f0cf32a7.svg": "/static/media/hamlet.f0cf32a7.svg",
+    "static/media/movieSvgBack.34c460c6.svg": "/static/media/movieSvgBack.34c460c6.svg",
+    "static/media/puppet.8b1afcd2.svg": "/static/media/puppet.8b1afcd2.svg",
+    "static/media/roses.84e37a9c.svg": "/static/media/roses.84e37a9c.svg",
+    "static/media/shakespeare.452a031d.svg": "/static/media/shakespeare.452a031d.svg",
+    "static/media/theater.6c32b3f8.svg": "/static/media/theater.6c32b3f8.svg",
+    "static/media/ventriloquist.e6a2e5b8.svg": "/static/media/ventriloquist.e6a2e5b8.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.90ec15dc.js",
+    "static/js/2.5b166540.chunk.js",
+    "static/css/main.20be433b.chunk.css",
+    "static/js/main.40b1d24b.chunk.js"
+  ]
+}
