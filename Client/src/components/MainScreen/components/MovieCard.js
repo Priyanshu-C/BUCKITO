@@ -17,6 +17,24 @@ const MovieCard = ({ id, openModal, setModalData }) => {
         setModalData(data);
         openModal();
     };
+    const [RatingArray, setRatingArray] = useState([]);
+    const [RatingArrayN, setRatingArrayN] = useState([]);
+
+    useEffect(() => {
+        if (data != undefined) {
+            const lengthOfRating = data.vote_average / 2;
+            for (let i = 0; i < lengthOfRating; i++) {
+                setRatingArray((e) => [
+                    ...e,
+                    <FaStar className="card-container__rating-icon" />,
+                ]);
+            }
+            for (let i = 0; i < 4 - lengthOfRating; i++) {
+                setRatingArrayN((e) => [...e, <FaStar />]);
+            }
+        }
+    }, [data]);
+
     if (data == null || data == undefined || data.poster_path == null)
         return null;
     return (
@@ -42,11 +60,8 @@ const MovieCard = ({ id, openModal, setModalData }) => {
                             {data.genres[0] && data.genres[0].name}
                         </div>
                         <div className="card-container__genre-and-rating__rating">
-                            <FaStar className="card-container__rating-icon" />
-                            <FaStar className="card-container__rating-icon" />
-                            <FaStar className="card-container__rating-icon" />
-                            <FaStar className="card-container__rating-icon" />
-                            <FaStar />
+                            {RatingArray.map((rat) => rat)}
+                            {RatingArrayN.map((rat) => rat)}
                         </div>
                     </div>
                     <div className="card-container__title">{data.title}</div>
