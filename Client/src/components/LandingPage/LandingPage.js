@@ -1,13 +1,25 @@
+//Essentials
 import React, { useEffect, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
-import firstSectionImg from "./assets/firstsection.svg";
-import logo from "./assets/LogoW.svg";
-import { motion, useViewportScroll, useTransform } from "framer-motion";
-import FlySuperStars from "./FlySuperStars";
-import director from "./assets/director.png";
 import { useHistory } from "react-router-dom";
+
+//Styling
+import { useInView } from "react-intersection-observer";
 import "./LandingPage.scss";
 import "./NavBar.scss";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
+
+//Icons
+import firstSectionImg from "./assets/firstsection.svg";
+import FlySuperStars from "./FlySuperStars";
+import logo from "./assets/LogoW.svg";
+import director from "./assets/director.png";
+import {
+    GrMail,
+    GrFacebook,
+    GrTwitter,
+    GrInstagram,
+    GrLinkedin,
+} from "react-icons/gr";
 
 const LandingPage = () => {
     const history = useHistory();
@@ -119,7 +131,25 @@ const LandingPage = () => {
                         Your personalized bucket-list
                     </h5>
                 </div>
-                <div className="third-section__footer-container"></div>
+                <div className="third-section__footer-container">
+                    <div className="third-section__footer-container-left">
+                        <div className="third-section__footer-container-left-headerAndEmail">
+                            Get in touch with us at priyanshuc.info@gmail.com
+                            <GrMail
+                                style={{ color: "cyan", fontSize: "5rem" }}
+                            />
+                        </div>
+                        <div>
+                            <GrFacebook className="third-section__footer-container-left-connect" />
+                            <GrTwitter className="third-section__footer-container-left-connect" />
+                            <GrInstagram className="third-section__footer-container-left-connect" />
+                            <GrLinkedin className="third-section__footer-container-left-connect" />
+                        </div>
+                    </div>
+                    <div className="third-section__footer-container-right">
+                        BUCKITO
+                    </div>
+                </div>
             </div>
         </div>
     );

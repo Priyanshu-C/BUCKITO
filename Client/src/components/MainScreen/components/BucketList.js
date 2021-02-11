@@ -1,10 +1,16 @@
+//Essentials
 import React, { useContext, useEffect } from "react";
-import "./BucketList.scss";
-import { motion, AnimatePresence } from "framer-motion";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "../../App";
+//Icons
+import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+//Apollo and Network
 import { gql, useMutation, useQuery } from "@apollo/client";
 import axios from "../../axios";
+//Styling
+import { motion, AnimatePresence } from "framer-motion";
+import "./BucketList.scss";
+
+//GQL Queries
 const GET_BUCKET_LIST = gql`
     query getBucketList($id: String) {
         getBucketList(id: $id) {
@@ -34,6 +40,7 @@ const BucketList = ({ handleRender, bucketList, showModal }) => {
     const [sendSelectedMovies, { selectedData }] = useMutation(
         SEND_SELECTED_MOVIES
     );
+    //Get BucketList
     const { loading, data, err, refetch } = useQuery(GET_BUCKET_LIST, {
         variables: { id: Auth },
     });
@@ -50,16 +57,16 @@ const BucketList = ({ handleRender, bucketList, showModal }) => {
 
     const handleAlreadyWatched = async (movie) => {
         console.log(movie);
+        await removeFromBucket({
+            variables: { id: Auth, movie: movie },
+        });
+        refetch();
         await sendSelectedMovies({
             variables: { id: Auth, movies: [movie] },
         });
         await axios.get(
             `/addMovieToRecommend?movie=${movie.split("#")[0]}&id=${Auth}`
         );
-        await removeFromBucket({
-            variables: { id: Auth, movie: movie },
-        });
-        refetch();
     };
 
     const handleRemoveFromBucket = async (movie) => {

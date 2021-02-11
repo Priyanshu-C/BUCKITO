@@ -1,9 +1,14 @@
+//Essentials
 import React, { useEffect, useState } from "react";
-import "./MovieCard.scss";
-import { FaStar } from "react-icons/fa";
 import axios from "axios";
-import { CardActionArea } from "@material-ui/core";
+
+//Styling
+import "./MovieCard.scss";
 import { motion } from "framer-motion";
+
+//Icons
+import { FaStar } from "react-icons/fa";
+
 const MovieCard = ({ id, openModal, setModalData }) => {
     const [data, setData] = useState(null);
     useEffect(() => {

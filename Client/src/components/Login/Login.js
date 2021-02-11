@@ -1,16 +1,26 @@
-import { CssBaseline, Grid, Typography } from "@material-ui/core";
+//Essentials 
 import React, { useContext, useRef, useState, useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
-import useStyles from "./LoginCss";
-import "./button.css";
-import GoogleButton from "react-google-button";
-import { AuthContext } from "../App";
-import { Redirect } from "react-router-dom";
-import "./Login.scss";
-import axios from "../axios";
 import { useHistory } from "react-router-dom";
-import Alert from "./components/Alert";
+import { Redirect } from "react-router-dom";
+import { AuthContext } from "../App";
+
+//Apollo
+import axios from "../axios";
+
+//Styling 
+import "./Login.scss";
+import "./button.css";
+import useStyles from "./LoginCss";
+import TextField from "@material-ui/core/TextField";
+import { CssBaseline, Grid, Typography } from "@material-ui/core";
+
+//Icons 
 import logo from "./components/LogoW.svg";
+import GoogleButton from "react-google-button";
+
+//Component
+import Alert from "./components/Alert";
+
 
 const Login = ({ setAuth }) => {
     const classes = useStyles();

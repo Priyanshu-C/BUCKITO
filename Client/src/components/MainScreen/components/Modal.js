@@ -1,10 +1,16 @@
+//Essentials 
 import React, { useState, useEffect, useContext, useRef } from "react";
-import "./Modal.scss";
-import anime from "animejs";
-import axios from "../../axios";
 import { AuthContext } from "../../App";
+
+//Apollo and Network
+import axios from "../../axios";
 import { gql, useMutation } from "@apollo/client";
 
+//Styling 
+import "./Modal.scss";
+import anime from "animejs";
+
+//GQL Queries
 const ADD_TO_BUCKET = gql`
     mutation addToBucketList($id: String, $movie: String) {
         addToBucketList(id: $id, movie: $movie) {
@@ -16,6 +22,7 @@ const ADD_TO_BUCKET = gql`
 const Modal = ({ showModal, setShowModal, data }) => {
     const [addToBucketQuery, { resdata }] = useMutation(ADD_TO_BUCKET);
     const Auth = useContext(AuthContext);
+    //Genres Id mapping
     const genreIdPairs = {
         28: "Action",
         12: "Adventure",
@@ -37,7 +44,7 @@ const Modal = ({ showModal, setShowModal, data }) => {
         10752: "War",
         37: "Western",
     };
-
+    //Modal START
     const closeModal = (e) => {
         if (animeClose.current === e.target) {
             setShowModal(false);
@@ -54,11 +61,12 @@ const Modal = ({ showModal, setShowModal, data }) => {
             opacity: 1,
         });
     }, [showModal]);
+    //Modal END
 
-    console.log(data);
     if (data == null || data == undefined || data.poster_path == null)
         return null;
 
+    // Handling of watched
     const handleAlreadyWatched = () => {
         axios.get(`/addMovieToRecommend?movie=${data.title}&id=${Auth}`);
         setShowModal(false);

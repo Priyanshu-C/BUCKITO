@@ -1,17 +1,22 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+//Essentials 
 import React, { useState, useMemo, useEffect, useContext } from "react";
-import TinderCard from "react-tinder-card";
-import useStyles from "./MovieSelectionStyle";
-import Loading from "../Loading";
-import polytop from "../../backgrounds/Polygontop.svg";
-import polybottom from "../../backgrounds/Polygontop.svg";
-import anime from "animejs";
-import "./MovieSelection.css";
 import { Redirect, useHistory } from "react-router-dom";
+import { AuthContext } from "../App";
+
+//Apollo
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_MOVIES, SEND_SELECTED_MOVIES } from "./gql";
-import { AuthContext } from "../App";
 import axios from "../axios";
+
+//Styling 
+import { Grid, Typography } from "@material-ui/core";
+import TinderCard from "react-tinder-card";
+import "./MovieSelection.css";
+import useStyles from "./MovieSelectionStyle";
+import Loading from "../Loading";
+
+//Icons 
+import polytop from "../../backgrounds/Polygontop.svg";
 
 const db = [];
 const alreadyRemoved = [];

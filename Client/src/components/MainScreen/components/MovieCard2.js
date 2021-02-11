@@ -1,7 +1,16 @@
+//Essentials
 import React, { useEffect, useState } from "react";
-import "./MovieCard.scss";
-import { FaStar } from "react-icons/fa";
+
+//Apollo
 import { motion } from "framer-motion";
+
+//Styling
+import "./MovieCard.scss";
+
+//Icons
+import { FaStar } from "react-icons/fa";
+
+//Movie Genre Id Mapping
 const MovieCard2 = ({ data, openModal, setModalData }) => {
     const genreIdPairs = {
         28: "Action",

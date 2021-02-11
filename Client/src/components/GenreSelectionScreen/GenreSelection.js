@@ -1,22 +1,17 @@
+//Essentials
 import { React, useContext, useEffect, useState } from "react";
-import _ from "lodash";
 
+//Styling
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+//Icons
+
 import IconButton from "@material-ui/core/IconButton";
-import { Link } from "react-router-dom";
 import GenreIcon from "./GenreIcon";
 import polytop from "../../backgrounds/Polygontop.svg";
-import polybottom from "../../backgrounds/Polygontop.svg";
 import anime from "animejs";
-import {
-    BrowserRouter,
-    Route,
-    Switch,
-    Redirect,
-    useHistory,
-} from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { AuthContext } from "../App";
 
 //Importing Icons

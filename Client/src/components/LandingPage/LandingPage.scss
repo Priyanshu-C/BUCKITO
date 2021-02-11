@@ -53,7 +53,7 @@ html {
     @media only screen and (max-width: 500px) {
         &__logo {
             left: 0.65rem;
-            top: 0.60rem;
+            top: 0.6rem;
         }
     }
 }
@@ -141,7 +141,7 @@ html {
         font-size: 6rem;
         color: white;
         @media only screen and (max-width: 500px) {
-            font-size: 8rem;
+            font-size: 6rem;
             margin-top: 15vh;
         }
     }
@@ -150,9 +150,10 @@ html {
         margin-top: 2vh;
         font-family: "ubuntu";
         font-size: 1.5rem;
+        text-align: center;
         color: #fdbb47;
         @media only screen and (max-width: 500px) {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     }
     &__button {
@@ -236,10 +237,12 @@ html {
         z-index: 2;
         margin-right: 2rem;
         @media only screen and (min-width: 500px) and (max-width: 768px) {
+            font-size: 5rem;
             margin-right: 0rem;
             justify-content: flex-end;
         }
         @media only screen and (max-width: 500px) {
+            font-size: 4rem;
             margin-right: 0rem;
             flex: 0 0 100%;
             text-align: center;
@@ -260,7 +263,8 @@ html {
         }
         @media only screen and (max-width: 500px) {
             width: 100%;
-            right: 1rem;
+            right: 0.25rem;
+            height: 20rem;
         }
     }
 
@@ -327,9 +331,52 @@ html {
         }
     }
     &__footer-container {
+        display: flex;
+        flex-wrap: wrap;
         bottom: 0;
         width: 100vw;
-        height: 25vh;
+        height: 30vh;
         background: linear-gradient(90deg, #5c258d 0%, #4389a2 100%);
+        &-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            &-headerAndEmail {
+                justify-content: center;
+                text-align: left;
+                color: white;
+                display: flex;
+                width: 70%;
+                font-size: 2rem;
+                font-family: "Ubuntu";
+                @media only screen and (max-width: 500px) {
+                    text-align: center;
+                }
+            }
+            &-connect {
+                color: white;
+                font-size: 2rem;
+                margin: 1rem;
+            }
+        }
+        &-right {
+            margin: 2rem;
+            border-left: 2px solid white;
+            flex: 0 0 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "ZeniqNano";
+            font-size: 5rem;
+            color: white;
+            @media only screen and (min-width: 500px) and (max-width: 768px) {
+                display: none;
+            }
+            @media only screen and (max-width: 500px) {
+                display: none;
+            }
+        }
     }
 }

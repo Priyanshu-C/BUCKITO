@@ -1,7 +1,12 @@
+//Essentials 
 import React, { useState, useEffect, createContext } from "react";
-import { ThemeProvider } from "@material-ui/styles";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+//Styling 
+import { ThemeProvider } from "@material-ui/styles";
 import theme from "./ui/Theme";
+ 
+//Fonts
 import "../icons/ZeniqNano.ttf";
 
 //Component import
@@ -30,7 +35,7 @@ const App = () => {
             .catch((e) => {
                 if (e.response) {
                     console.log(e);
-                    if (e.response.status == 404) setAuth("404");
+                    if (e.response.status === 404) setAuth("404");
                 }
             });
     }, []);
