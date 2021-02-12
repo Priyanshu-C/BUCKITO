@@ -33,6 +33,7 @@ import { useQuery } from "@apollo/client";
 import axios from "../axios";
 import outerCalls from "axios";
 import SideNaV from "./components/SideNaV";
+import Loading from "../Loading";
 
 const MainScreen = () => {
     //MODAL
@@ -46,7 +47,7 @@ const MainScreen = () => {
     const [recommendedData, setRecommendedData] = useState([]);
 
     //Use Query for GraphQL
-    const { loading, data, err } = useQuery(GET_RECOMMENDATIONS, {
+    const { loading, data, err, refetch } = useQuery(GET_RECOMMENDATIONS, {
         variables: { id: Auth },
     });
     //GENRE Selection
@@ -73,6 +74,7 @@ const MainScreen = () => {
     const [sidebarSelectionData, setSidebarSelectionData] = useState(null);
     const handleSidebarSelection = (e) => {
         setShowSidenav((select) => !select);
+        setGenre(null);
         // console.log(e.target.innerText);
         const selected = e.target.innerText;
         setSidebarSelection(selected);
@@ -116,6 +118,12 @@ const MainScreen = () => {
         }
     }, [data, genreQuery]);
 
+    if (recommendedData.length === 0) {
+        setTimeout(() => {
+            refetch();
+        }, 5000);
+    }
+
     // MORPH START
     let animatedOn;
     useEffect(() => {
@@ -154,6 +162,7 @@ const MainScreen = () => {
     const handleSignOut = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("ID");
+        localStorage.removeItem("gerneSelected");
         history.push("/login");
     };
     const DisplayGenres = [
@@ -220,6 +229,13 @@ const MainScreen = () => {
                                     <li
                                         onClick={handleSidebarSelection}
                                         className="sidebar-and-header__sidebar-menu-items"
+                                        style={
+                                            sidebarSelection === "Now Playing"
+                                                ? {
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         <DiCodeigniter className="icons" />
                                         Now Playing
@@ -227,6 +243,13 @@ const MainScreen = () => {
                                     <li
                                         onClick={handleSidebarSelection}
                                         className="sidebar-and-header__sidebar-menu-items"
+                                        style={
+                                            sidebarSelection === "Popular"
+                                                ? {
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         <AiFillStar className="icons" />
                                         Popular
@@ -234,6 +257,13 @@ const MainScreen = () => {
                                     <li
                                         onClick={handleSidebarSelection}
                                         className="sidebar-and-header__sidebar-menu-items"
+                                        style={
+                                            sidebarSelection === "Upcoming"
+                                                ? {
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         <TiArrowRightThick className="icons" />
                                         Upcoming
@@ -242,6 +272,13 @@ const MainScreen = () => {
                                     <li
                                         onClick={handleMadeForYou}
                                         className="sidebar-and-header__sidebar-menu-items"
+                                        style={
+                                            sidebarSelection === "Made for you"
+                                                ? {
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         <AiFillHeart className="icons" />
                                         Made for you
@@ -249,6 +286,13 @@ const MainScreen = () => {
                                     <li
                                         onClick={handleSidebarSelection}
                                         className="sidebar-and-header__sidebar-menu-items"
+                                        style={
+                                            sidebarSelection === "Trending Now"
+                                                ? {
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         <HiChartBar className="icons" />
                                         Trending Now
@@ -264,6 +308,7 @@ const MainScreen = () => {
                                 setShowSidenav={setShowSidenav}
                                 handleSidebarSelection={handleSidebarSelection}
                                 handleMadeForYou={handleMadeForYou}
+                                sidebarSelection={sidebarSelection}
                             />
                             <div className="main-body__nav-bar__header">
                                 BUCKITO
@@ -294,6 +339,14 @@ const MainScreen = () => {
                                     <button
                                         onClick={handleGenre}
                                         className="main-body__genre__genres-genre"
+                                        style={
+                                            genre === DGenre
+                                                ? {
+                                                      background: "white",
+                                                      color: "black",
+                                                  }
+                                                : null
+                                        }
                                     >
                                         {DGenre}
                                     </button>
@@ -301,6 +354,12 @@ const MainScreen = () => {
                             </div>
                         </div>
                         <div className="main-body__movies-container">
+                            {recommendedData.length == 0 ? (
+                                <div className="main-body__movies-container__loading">
+                                    Please Explore other sections while we
+                                    curate your recommendation.
+                                </div>
+                            ) : null}
                             <div className="main-body__movies-container__movie-card">
                                 {recommendedData && !sidebarSelection
                                     ? recommendedData.map((movie) =>

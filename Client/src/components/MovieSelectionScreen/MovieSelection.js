@@ -1,4 +1,4 @@
-//Essentials 
+//Essentials
 import React, { useState, useMemo, useEffect, useContext } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { AuthContext } from "../App";
@@ -8,14 +8,14 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_MOVIES, SEND_SELECTED_MOVIES } from "./gql";
 import axios from "../axios";
 
-//Styling 
+//Styling
 import { Grid, Typography } from "@material-ui/core";
 import TinderCard from "react-tinder-card";
 import "./MovieSelection.css";
 import useStyles from "./MovieSelectionStyle";
 import Loading from "../Loading";
 
-//Icons 
+//Icons
 import polytop from "../../backgrounds/Polygontop.svg";
 
 const db = [];
@@ -33,6 +33,7 @@ function MovieSelection() {
     const [movies, setMovies] = useState([]);
     const [lastDirection, setLastDirection] = useState();
     const genres = JSON.parse(localStorage.getItem("gerneSelected"));
+    if (!genres || genres.length==0) history.push("/genreselection");
     //console.log(genres);
     const { loading, error, data } = useQuery(GET_MOVIES, {
         variables: { genres: genres, count: 10 },
