@@ -29,32 +29,32 @@ Buckito is a cutting-edge movie recommendation website designed to offer persona
 ### Installation
 
 1. Clone the repository:
-   \```bash
+   ```
    git clone https://github.com/yourusername/buckito.git
    cd buckito
-   \```
+   ```
 
 2. Install NPM packages for the frontend and backend:
-   \```bash
+   ```
    npm install
-   \```
+   ```
 
 3. Set up your Python environment for FastAPI and install dependencies:
-   \```bash
+   ```
    pip install fastapi uvicorn
-   \```
+   ```
 
 4. Enter your environment variables in `.env`:
-   \```plaintext
+   ```
    MONGO_URI="your_mongodb_uri"
    TMDB_API_KEY="your_tmdb_api_key"
-   \```
+   ```
 
 5. Start the backend and frontend servers:
-   \```bash
+   ```
    npm start # For MERN backend and React frontend
    uvicorn main:app --reload  # For FastAPI service
-   \```
+   ```
 
 6. Navigate to `localhost:3000` in your browser for the frontend.
 
